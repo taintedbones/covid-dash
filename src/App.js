@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import USStatsPage from "./pages/StatsPage/USStatsPage";
+import GlobalStatsPage from "./pages/StatsPage/GlobalStatsPage";
+import GlobalMapPage from "./pages/MapPage/GlobalMapPage";
+import USMapPage from "./pages/MapPage/USMapPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NavBar from "./NavBar/NavBar";
+import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import "@fontsource/roboto/400.css";
 
 function App() {
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Router>
+        <NavBar />
+        <div style={{ padding: "80px 20px 10px" }}>
+          <Routes>
+            <Route path="/" element={<GlobalMapPage />} />
+            <Route path="/statistics/global" element={<GlobalStatsPage />} />
+            <Route path="/statistics" element={<USStatsPage />} />
+            <Route path="/map/us" element={<USMapPage />} />
+          </Routes>
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 
