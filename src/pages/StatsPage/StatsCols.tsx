@@ -22,7 +22,99 @@ const renderHistCell = (params) => {
   }
 };
 
-export const countryCols: GridColDef[] = [
+export const countryPopCols: GridColDef[] = [
+  {
+    field: "flag",
+    headerName: "",
+    flex: 0.5,
+    valueGetter: (params) => {
+      return params.row.countryInfo.flag;
+    },
+    renderCell: (params) => {
+      return (
+        <img
+          src={params.row.countryInfo.flag}
+          alt=""
+          style={{ height: "20px" }}
+        />
+      );
+    },
+    sortable: false,
+  },
+  {
+    field: "country",
+    headerName: "Country",
+    flex: 1,
+  },
+  // {
+  //   field: "active",
+  //   headerName: "Active",
+  //   flex: 1,
+  //   type: "number",
+  // },
+  // {
+  //   field: "activeHist",
+  //   headerName: "Active (2 Day)",
+  //   flex: 1,
+  //   valueGetter: (params) => params.row.active - params.row.twoDayHist.active,
+  //   renderCell: renderHistCell,
+  //   sortable: false,
+  // },
+  {
+    field: "cases",
+    headerName: "Confirmed (per 1M)",
+    flex: 1,
+    type: "number",
+    valueGetter: (params) => params.row.casesPerOneMillion
+  },
+  {
+    field: "casesHist",
+    headerName: "Confirmed (2 Day)",
+    flex: 1,
+    valueGetter: (params) => params.row.casesPerOneMillion - params.row.twoDayHist.casesPerOneMillion,
+    renderCell: renderHistCell,
+    sortable: false,
+  },
+  {
+    field: "deaths",
+    headerName: "Deaths (per 1M)",
+    flex: 1,
+    type: "number",
+    valueGetter: (params) => params.row.deathsPerOneMillion
+  },
+  {
+    field: "deathsHist",
+    headerName: "Deaths (2 Day)",
+    flex: 1,
+    valueGetter: (params) => params.row.deathsPerOneMillion - params.row.twoDayHist.deathsPerOneMillion,
+    renderCell: renderHistCell,
+    sortable: false,
+  },
+  {
+    field: "tests",
+    headerName: "Tests (per 1M)",
+    flex: 1,
+    type: "number",
+    valueGetter: (params) => params.row.testsPerOneMillion
+  },
+  {
+    field: "testHist",
+    headerName: "Tests (2 Day)",
+    flex: 1,
+    valueGetter: (params) =>
+      params.row.testsPerOneMillion - params.row.twoDayHist.testsPerOneMillion,
+    renderCell: renderHistCell,
+    sortable: false,
+  },
+  {
+    field: "updated",
+    headerName: "Last Updated",
+    flex: 1.5,
+    valueGetter: (params) => new Date(params.value).toLocaleString(),
+  },
+];
+
+export const countryTotalCols: GridColDef[] = [
   {
     field: "flag",
     headerName: "",
@@ -103,12 +195,6 @@ export const countryCols: GridColDef[] = [
     renderCell: renderHistCell,
     sortable: false,
   },
-  // {
-  //   field: "tests",
-  //   headerName: "Tests",
-  //   flex: 1,
-  //   type: "number",
-  // },
   {
     field: "updated",
     headerName: "Last Updated",
@@ -194,7 +280,7 @@ export const provinceCols: GridColDef[] = [
   },
 ];
 
-export const stateCols: GridColDef[] = [
+export const stateTotalCols: GridColDef[] = [
   {
     field: "flag",
     headerName: "",
@@ -273,6 +359,76 @@ export const stateCols: GridColDef[] = [
   //   flex: 1,
   //   type: "number",
   // },
+  {
+    field: "updated",
+    headerName: "Last Updated",
+    flex: 1.5,
+    valueGetter: (params) => new Date(params.value).toLocaleString(),
+  },
+];
+
+export const statePopCols: GridColDef[] = [
+  {
+    field: "flag",
+    headerName: "",
+    flex: 0.5,
+    valueGetter: (params) => {
+      return params.row.flag;
+    },
+    renderCell: (params) => {
+      return <img src={params.row.flag} alt="" style={{ height: "20px" }} />;
+    },
+  },
+  {
+    field: "state",
+    headerName: "State",
+    flex: 1,
+  },
+  {
+    field: "cases",
+    headerName: "Cases (per 1M)",
+    flex: 1,
+    type: "number",
+    valueGetter: (params) => params.row.casesPerOneMillion
+  },
+  {
+    field: "casesHist",
+    headerName: "Confirmed (1 Day)",
+    flex: 1,
+    valueGetter: (params) => params.row.casesPerOneMillion - params.row.hist.casesPerOneMillion,
+    renderCell: renderHistCell,
+    sortable: false,
+  },
+  {
+    field: "deaths",
+    headerName: "Deaths (per 1M)",
+    flex: 1,
+    type: "number",
+    valueGetter: (params) => params.row.deathsPerOneMillion
+  },
+  {
+    field: "deathsHist",
+    headerName: "Deaths (1 Day)",
+    flex: 1,
+    valueGetter: (params) => params.row.deathsPerOneMillion - params.row.hist.deathsPerOneMillion,
+    renderCell: renderHistCell,
+    sortable: false,
+  },
+  {
+    field: "tests",
+    headerName: "Tests (per 1M)",
+    flex: 1,
+    type: "number",
+    valueGetter: (params) => params.row.testsPerOneMillion
+  },
+  {
+    field: "testsHist",
+    headerName: "Tests (1 Day)",
+    flex: 1,
+    valueGetter: (params) => params.row.testsPerOneMillion - params.row.hist.testsPerOneMillion,
+    renderCell: renderHistCell,
+    sortable: false,
+  },
   {
     field: "updated",
     headerName: "Last Updated",

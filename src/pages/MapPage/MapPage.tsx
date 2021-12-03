@@ -9,17 +9,8 @@ import MapChart from "./components/MapChart";
 import SummaryList from "./components/SummaryList";
 import TotalCard from "./components/TotalCard";
 
-const styling = {
-  root: {
-    paddingTop: "80px",
-  },
-  paper: {
-    padding: "5px",
-  },
-};
-
 function MapPage({
-  totals, 
+  totals,
   view,
   setView,
   title,
@@ -31,31 +22,42 @@ function MapPage({
   return (
     <div>
       <Grid item container spacing={2} justifyContent="space-evenly">
-        {totals && (<Grid
-          item
-          container
-          className="totalsContainer"
-          xs={12}
-          spacing={2}
-          justifyContent="space-evenly"
-        >          
+        {totals && <Grid item xs={12}>Updated: {new Date(totals.updated).toUTCString()}</Grid>}
+        {totals && (
+          <Grid
+            item
+            container
+            className="totalsContainer"
+            xs={12}
+            spacing={2}
+            justifyContent="space-evenly"
+          >
             <TotalCard
               title="Total Cases"
               value={totals.cases}
               color="lightblue"
-            />          
+              gridWidth={3}
+            />
             <TotalCard
               title="Total Recoveries"
               value={totals.recovered}
               color="lightgreen"
+              gridWidth={3}
             />
             <TotalCard
               title="Total Deaths"
               value={totals.deaths}
               color="lightcoral"
+              gridWidth={3}
             />
-            <TotalCard title="Total Tests" value={totals.tests} color="khaki" />
-        </Grid>)}
+            <TotalCard
+              title="Total Tests"
+              value={totals.tests}
+              color="khaki"
+              gridWidth={3}
+            />
+          </Grid>
+        )}
         <Grid item xs={3}>
           <Typography variant="h4" align="center">
             {title}
@@ -73,7 +75,7 @@ function MapPage({
             <ToggleButton value="deaths">Deaths</ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Grid item xs={3} style={{ width: "100%", height: "600px" }}>
+        <Grid item xs={3} style={{ width: "100%", height: "670px" }}>
           <Paper style={{ height: "100%" }}>
             <SummaryList data={data} loading={loading} columns={cols} />
           </Paper>

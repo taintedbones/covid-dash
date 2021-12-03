@@ -4,11 +4,13 @@ import {
   Button,
   Toolbar,
   Typography,
+  Grid,
   Menu,
   MenuItem,
   Divider,
 } from "@mui/material";
 import { KeyboardArrowDown } from "@mui/icons-material";
+import { MdOutlineCoronavirus } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 function NavBar() {
@@ -16,23 +18,39 @@ function NavBar() {
   const [usMenuAnchor, setUsMenuAnchor] = useState<null | HTMLElement>(null);
   const [globalMenuAnchor, setGlobalMenuAnchor] =
     useState<null | HTMLElement>();
+  const [vaxMenuAnchor, setVaxMenuAnchor] = useState<null | HTMLElement>(null);
   const openUSMenu = Boolean(usMenuAnchor);
   const openGlobalMenu = Boolean(globalMenuAnchor);
+  const openVaxMenu = Boolean(vaxMenuAnchor);
 
   const handleUSClose = () => {
     setUsMenuAnchor(null);
   };
-  const handleGlobalClose = () => {
+  const handleGlobalClose = () => { 
     setGlobalMenuAnchor(null);
+  };
+  const handleVaxClose = () => {
+    setVaxMenuAnchor(null);
   };
 
   return (
     <div>
       <AppBar position="fixed">
-        <Toolbar style={{ justifyContent: "space-between" }}>
+        <Toolbar style={{ justifyContent: "space-between", alignItems: "center" }} variant="dense">
           <Link to="/">
-            <Button variant="text" sx={{ marginRight: "50px" }} onClick={() => setTitle("")}>
-              <Typography variant="h5">COVID-19 Dashboard</Typography>
+            <Button
+              variant="text"
+              sx={{ marginRight: "50px", paddingTop: "10px" }}
+              onClick={() => setTitle("")}
+            >
+              <Grid container>
+                <Grid item>
+                  <Typography variant="h4"><MdOutlineCoronavirus /></Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="h5"> COVID-19 Dashboard</Typography>
+                </Grid>
+              </Grid>
             </Button>
           </Link>
           <Typography variant="h5">{title}</Typography>
@@ -66,7 +84,7 @@ function NavBar() {
                 </MenuItem>
               </Link>
               <Divider />
-              <Link to="/statistics">
+              <Link to="/statistics/us">
                 <MenuItem
                   onClick={() => {
                     setTitle("US Statistics");
@@ -96,7 +114,7 @@ function NavBar() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <Link to="/">
+              <Link to="/map">
                 <MenuItem
                   onClick={() => {
                     setTitle("Global Map");
@@ -108,7 +126,7 @@ function NavBar() {
                 </MenuItem>
               </Link>
               <Divider />
-              <Link to="/statistics/global">
+              <Link to="/statistics">
                 <MenuItem
                   onClick={() => {
                     setTitle("Global Statistics");
@@ -120,10 +138,47 @@ function NavBar() {
                 </MenuItem>
               </Link>
             </Menu>
-
-            <Link to="/vaccinations">
-              <Button variant="contained">Vaccine Data</Button>
-            </Link>
+            <Button
+              variant="contained"
+              sx={{ marginRight: "10px" }}
+              onClick={(e) => setVaxMenuAnchor(e.currentTarget)}
+              endIcon={<KeyboardArrowDown />}
+            >
+              Vaccine Data
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={vaxMenuAnchor}
+              open={openVaxMenu}
+              onClose={handleVaxClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <Link to="/vaccines/us">
+                <MenuItem
+                  onClick={() => {
+                    setTitle("US Vaccines");
+                    handleVaxClose();
+                  }}
+                  sx={{ color: "white" }}
+                >
+                  US Vaccine Data
+                </MenuItem>
+              </Link>
+              <Divider />
+              <Link to="/vaccines">
+                <MenuItem
+                  onClick={() => {
+                    setTitle("Global Vaccines");
+                    handleVaxClose();
+                  }}
+                  sx={{ color: "white" }}
+                >
+                  Global Vaccine Data
+                </MenuItem>
+              </Link>
+            </Menu>
           </div>
         </Toolbar>
       </AppBar>

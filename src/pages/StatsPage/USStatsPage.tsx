@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Grid, MenuItem, Typography, Select, Paper } from "@mui/material";
+import {
+  Grid,
+  MenuItem,
+  Typography,
+  Select,
+  Paper,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { State, County } from "../../scripts/DataInterfaces";
-import { stateCols, countyCols } from "./StatsCols";
+import { stateTotalCols, statePopCols, countyCols } from "./StatsCols";
 import { getUSFlag } from "../../scripts/USFlagMatch";
 import TotalCard from "../MapPage/components/TotalCard";
 import USDataGraph from "../../Graphs/USDataGraph";
+import { TableFooter, TableHeader } from "../../DataTable/DataTable";
 import axios from "axios";
 
 const styling = {
   dataGrid: {
-    height: "700px",
+    height: "600px",
   },
   select: {
     width: "100%",
@@ -29,12 +38,20 @@ function USStatsPage() {
   const [stateName, setStateName] = useState<string>("All");
   const [state, setState] = useState<State>();
   const [data, setData] = useState<State[] | County[]>([]);
-  const [cols, setCols] = useState<any>(stateCols);
+  const [cols, setCols] = useState<any>(stateTotalCols);
   const [stateNames, setStateNames] = useState<string[]>([]);
   const [filterModel, setFilterModel] = useState<any>({
     items: [],
   });
-  const [sortModel, setSortModel] = useState<any>([{ field: "cases", sort: "desc" }]);
+  const [sortModel, setSortModel] = useState<any>([
+    { field: "cases", sort: "desc" },
+  ]);
+  const [dataPerPop, setDataPerPop] = useState<boolean>(false);
+  const [dataSource, setDataSource] = useState<any>({
+    name: "Worldometers",
+    url: "https://www.worldometers.info/coronavirus/",
+  });
+  const [disableDataSelect, setDisableDataSelect] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchState = async () => {
@@ -78,6 +95,9 @@ function USStatsPage() {
               cases: hist?.cases,
               deaths: hist?.deaths,
               recovered: hist?.recovered,
+              casesPerOneMillion: hist?.casesPerOneMillion,
+              deathsPerOneMillion: hist?.deathsPerOneMillion,
+              testsPerOneMillion: hist?.testsPerOneMillion,
             },
           };
         });
@@ -127,14 +147,23 @@ function USStatsPage() {
     if (stateName === "All") {
       setState(undefined);
       setData(stateList);
-      setCols(stateCols);
+      setCols(stateTotalCols);
+      setDataSource({
+        name: "Worldometers",
+        url: "https://www.worldometers.info/coronavirus/",
+      });
       setFilterModel({
         items: [],
       });
+      setDisableDataSelect(false);
     } else {
       setState(stateList.find((item) => item.state === stateName));
       setData(countyList);
       setCols(countyCols);
+      setDataSource({
+        name: "John Hopkins University",
+        url: "https://coronavirus.jhu.edu/",
+      });
       setFilterModel({
         items: [
           {
@@ -144,15 +173,28 @@ function USStatsPage() {
           },
         ],
       });
+      setDisableDataSelect(true);
     }
   }, [stateName]);
+
+  useEffect(() => {
+    if (dataPerPop) {
+      setCols(statePopCols);
+    } else {
+      setCols(stateTotalCols);
+    }
+  }, [dataPerPop]);
 
   return (
     <div>
       <Grid container spacing={2}>
         <Grid item container spacing={2} xs={12} justifyContent="space-between">
           <Grid item container xs={4}>
-            <Typography variant="h4">US Statistics</Typography>
+            {/* <Typography variant="h4">US Statistics</Typography> */}
+            <TableHeader
+              setShowPop={setDataPerPop}
+              disabled={disableDataSelect}
+            />
             <Select
               value={stateName}
               label="Select State"
@@ -177,16 +219,19 @@ function USStatsPage() {
                 title="Total Cases"
                 value={state?.cases}
                 color="lightblue"
+                gridWidth={3}
               />
               <TotalCard
                 title="Total Deaths"
                 value={state?.deaths}
                 color="lightcoral"
+                gridWidth={3}
               />
               <TotalCard
                 title="Total Recoveries"
                 value={state?.recovered}
                 color="lightgreen"
+                gridWidth={3}
               />
             </Grid>
           )}
@@ -200,6 +245,15 @@ function USStatsPage() {
             sortModel={sortModel}
             onSortModelChange={(model) => setSortModel(model)}
             filterModel={filterModel}
+            components={{
+              Footer: TableFooter,
+            }}
+            componentsProps={{
+              footer: {
+                sourceName: dataSource.name,
+                sourceUrl: dataSource.url,
+              },
+            }}
           />
         </Grid>
         {stateName === "All" && <USDataGraph />}

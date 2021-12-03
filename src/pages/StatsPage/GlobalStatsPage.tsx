@@ -2,10 +2,11 @@ import { Grid, MenuItem, Typography, Select, Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import { Country, CountryJH } from "../../scripts/DataInterfaces";
-import { countryCols, provinceCols } from "./StatsCols";
+import { countryTotalCols, countryPopCols, provinceCols } from "./StatsCols";
 import TotalCard from "../MapPage/components/TotalCard";
 import GlobalDataGraphs from "../../Graphs/GlobalDataGraphs";
 import CountryDataGraphs from "../../Graphs/CountryDataGraphs";
+import { TableFooter, TableHeader } from "../../DataTable/DataTable";
 import axios from "axios";
 
 const styling = {
@@ -32,17 +33,26 @@ function GlobalStatsPage() {
   const [countryName, setCountryName] = useState<string>("World");
   const [country, setCountry] = useState<Country | undefined>(undefined);
   const [data, setData] = useState<Country[] | CountryJH[]>([]);
-  const [cols, setCols] = useState<any>(countryCols);
+  const [cols, setCols] = useState<any>(countryTotalCols);
   const [filterModel, setFilterModel] = useState<any>({ items: [] });
   const [countryNames, setCountryNames] = useState<string[]>([]);
-  const [sortModel, setSortModel] = useState<any>([{ field: "cases", sort: "desc" }]);
-  const [showStateGraphs, setShowStateGraphs] = useState<boolean>(false);
+  const [sortModel, setSortModel] = useState<any>([
+    { field: "cases", sort: "desc" },
+  ]);
+  const [dataPerPop, setDataPerPop] = useState<boolean>(false);
+  const [dataSource, setDataSource] = useState<any>({
+    name: "Worldometers",
+    url: "https://www.worldometers.info/coronavirus/",
+  });
+  const [disableDataSelect, setDisableDataSelect] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCountries = async () => {
       setLoading(true);
       try {
-        const r = await axios.get("https://disease.sh/v3/covid-19/countries?sort=cases&allowNull=true");
+        const r = await axios.get(
+          "https://disease.sh/v3/covid-19/countries?sort=cases&allowNull=true"
+        );
         const temp: any[] = r.data;
         const countries: Country[] = temp.map((country, idx) => ({
           ...country,
@@ -66,18 +76,22 @@ function GlobalStatsPage() {
         const temp: Country[] = countries.map((country) => {
           const hist: any = countriesHist.find(
             (i: Country) => i.country === country.country
-          );
-
-          return {
-            ...country,
-            twoDayHist: {
-              active: hist?.active,
-              cases: hist?.cases,
-              deaths: hist?.deaths,
-              recovered: hist?.recovered,
-            },
-          };
-        });
+            );
+            
+            return {
+              ...country,
+              twoDayHist: {
+                active: hist?.active,
+                cases: hist?.cases,
+                deaths: hist?.deaths,
+                recovered: hist?.recovered,
+                casesPerOneMillion: hist?.casesPerOneMillion,
+                deathsPerOneMillion: hist?.deathsPerOneMillion,
+                testsPerOneMillion: hist?.testsPerOneMillion,
+              },
+            };
+          });
+        console.log(temp);
         setData(temp);
         setCountryList(temp);
       } catch (err) {
@@ -87,19 +101,28 @@ function GlobalStatsPage() {
 
     const fetchProvinceHistory = async (provinces) => {
       try {
-        const r = await axios.get("https://disease.sh/v3/covid-19/historical?lastdays=2");
-        
+        const r = await axios.get(
+          "https://disease.sh/v3/covid-19/historical?lastdays=2"
+        );
+
         const provincesHist: any[] = r.data;
         const temp = provinces.map((province) => {
-          const hist: any = provincesHist.find((i: any) => i.province === province.province.toLowerCase());
+          const hist: any = provincesHist.find(
+            (i: any) => i.province === province.province.toLowerCase()
+          );
           return {
             ...province,
             twoDayHist: {
-              confirmed: hist?.timeline.cases[(Object.keys(hist?.timeline.cases)[0])],
-              deaths: hist?.timeline.deaths[(Object.keys(hist?.timeline.deaths)[0])],
-              recovered: hist?.timeline.recovered[(Object.keys(hist?.timeline.recovered)[0])]
-            }
-          }
+              confirmed:
+                hist?.timeline.cases[Object.keys(hist?.timeline.cases)[0]],
+              deaths:
+                hist?.timeline.deaths[Object.keys(hist?.timeline.deaths)[0]],
+              recovered:
+                hist?.timeline.recovered[
+                  Object.keys(hist?.timeline.recovered)[0]
+                ],
+            },
+          };
         });
 
         setProvinceList(temp);
@@ -150,14 +173,24 @@ function GlobalStatsPage() {
     if (countryName === "World") {
       setCountry(undefined);
       setData(countryList);
-      setCols(countryCols);
+      setCols(countryTotalCols);
+      setDataSource({
+        name: "Worldometers",
+        url: "https://www.worldometers.info/coronavirus/",
+      });
       setFilterModel({
         items: [],
       });
+      setDisableDataSelect(false);
+
     } else {
       setCountry(countryList.find((item) => item.country === countryName));
       setData(provinceList);
       setCols(provinceCols);
+      setDataSource({
+        name: "John Hopkins University",
+        url: "https://coronavirus.jhu.edu/",
+      });
       setFilterModel({
         items: [
           {
@@ -167,15 +200,28 @@ function GlobalStatsPage() {
           },
         ],
       });
+      setDisableDataSelect(true);
     }
   }, [countryName]);
+
+  useEffect(() => {
+    if (dataPerPop) {
+      setCols(countryPopCols);
+    } else {
+      setCols(countryTotalCols);
+    }
+  }, [dataPerPop]);
 
   return (
     <div>
       <Grid container spacing={2}>
         <Grid item container spacing={2} xs={12} justifyContent="space-between">
           <Grid item container xs={4}>
-            <Typography variant="h4">Global Statistics</Typography>
+            {/* <Typography variant="h4">Global Statistics</Typography> */}
+            <TableHeader
+              setShowPop={setDataPerPop}
+              disabled={disableDataSelect}
+            />
             <Select
               value={countryName}
               label="Select Country"
@@ -206,16 +252,19 @@ function GlobalStatsPage() {
                 title="Total Cases"
                 value={country?.cases}
                 color="lightblue"
+                gridWidth={3}
               />
               <TotalCard
                 title="Total Recovered"
                 value={country?.recovered}
                 color="lightgreen"
+                gridWidth={3}
               />
               <TotalCard
                 title="Total Deaths"
                 value={country?.deaths}
                 color="lightcoral"
+                gridWidth={3}
               />
             </Grid>
           )}
@@ -229,6 +278,15 @@ function GlobalStatsPage() {
             sortModel={sortModel}
             onSortModelChange={(model) => setSortModel(model)}
             filterModel={filterModel}
+            components={{
+              Footer: TableFooter,
+            }}
+            componentsProps={{
+              footer: {
+                sourceName: dataSource.name,
+                sourceUrl: dataSource.url,
+              },
+            }}
           />
         </Grid>
         {!country && <GlobalDataGraphs />}

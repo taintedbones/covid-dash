@@ -8,11 +8,11 @@ function LineGraph({ title, data }) {
       <Grid item xs={12}>
         <Typography variant="h5">{title}</Typography>
       </Grid>
-      <Grid item xs={12} sx={{ height: "500px" }}>
+      <Grid item xs={12} sx={{ height: "500px", width: "100%" }}>
         <Paper style={{ height: "inherit", padding: "10px", color: "black" }}>
           <ResponsiveLine
             data={data}
-            margin={{ top: 50, right: 80, bottom: 50, left: 60 }}
+            margin={{ top: 10, right: 130, bottom: 70, left: 70 }}
             xScale={{ type: "point" }}
             yScale={{
               type: "linear",
@@ -21,15 +21,16 @@ function LineGraph({ title, data }) {
               stacked: true,
               reverse: false,
             }}
-            yFormat=" >-.2f"
+            yFormat=">-.1f"
+            curve="natural"
             axisTop={null}
             axisRight={null}
             axisBottom={{
-              tickSize: 5,
+              tickSize: 5, 
               tickPadding: 5,
-              tickRotation: 0,
+              tickRotation: -35,
               legend: "Date (10 Day Period)",
-              legendOffset: 40,
+              legendOffset: 50,
               legendPosition: "middle",
             }}
             axisLeft={{
@@ -37,7 +38,7 @@ function LineGraph({ title, data }) {
               tickPadding: 5,
               tickRotation: 0,
               legend: "Cases (per million)",
-              legendOffset: -50,
+              legendOffset: -60,
               legendPosition: "middle",
             }}
             pointSize={7}
@@ -51,11 +52,11 @@ function LineGraph({ title, data }) {
             useMesh={true}
             legends={[
               {
-                anchor: "bottom-right",
+                anchor: "top-right",
                 direction: "column",
                 justify: false,
                 translateX: 100,
-                translateY: -127,
+                translateY: 0,
                 itemsSpacing: 0,
                 itemDirection: "left-to-right",
                 itemWidth: 80,

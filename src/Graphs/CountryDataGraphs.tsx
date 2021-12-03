@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import LineGraph from "./LineGraph";
+import { parseData } from "./parseData";
 import axios from "axios";
 
 function CountryDataGraphs({ country }) {
@@ -11,18 +12,6 @@ function CountryDataGraphs({ country }) {
   console.log(country);
 
   useEffect(() => {
-    const parseData = (input) => {
-      const dates: any = Object.keys(input);
-      const values: any = Object.values(input);
-
-      const stats = dates.map((item, idx) => ({
-        x: item,
-        y: values[idx] / 1000000,
-      }));
-
-      return stats;
-    };
-
     const fetchGlobalHistory = async () => {
       try {
         const r = await axios.get(

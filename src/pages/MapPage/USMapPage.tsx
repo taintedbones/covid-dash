@@ -162,6 +162,8 @@ function USMapPage() {
           y: 0.5,
           features: feats.features,
           label: "properties.state_name",
+          colors: "YlOrRd",
+          // borderColor: "#000000"
         }}
       />
     </div>

@@ -180,6 +180,8 @@ function GlobalMapPage() {
               y: 0.63,
               features: feats.features,
               label: "properties.name",
+              colors: "YlOrRd",
+              // borderColor: "#000000"
             }}
           />
         </Grid>
