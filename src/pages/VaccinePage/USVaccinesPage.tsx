@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import VaccinesPage from "./VaccinePage";
-import { getStateISO3 } from "../../scripts/StateISO3Match";
 import { stateVaxCols } from "./VaccineCols";
 import { parseData } from "../../Graphs/parseData";
 import feats from "../MapPage/MapFeatures/us_states_albers.json";
@@ -11,7 +10,6 @@ function USVaccinesPage() {
   const [tableData, setTableData] = useState<any[]>([]);
   const [mapData, setMapData] = useState<any[]>([]);
   const [timeline, setTimeline] = useState<any[]>([]);
-  const [sortModel, setSortModel] = useState<any[]>([{}]);
 
   useEffect(() => {
     // full data of State totals for 2 days
@@ -55,7 +53,6 @@ function USVaccinesPage() {
         }
     };
 
-    // fetchGlobalTotal();
     fetchStateData();
     fetchTimeline();
 
@@ -78,8 +75,7 @@ function USVaccinesPage() {
             y: 0.5,
             features: feats.features,
             label: "properties.state_name",
-            colors: "PuBu",
-            // borderColor: "#FFFFFF"
+            colors: "nivo",
           }}
       />
     </div>

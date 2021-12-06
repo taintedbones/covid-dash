@@ -46,32 +46,19 @@ export const countryPopCols: GridColDef[] = [
     headerName: "Country",
     flex: 1,
   },
-  // {
-  //   field: "active",
-  //   headerName: "Active",
-  //   flex: 1,
-  //   type: "number",
-  // },
-  // {
-  //   field: "activeHist",
-  //   headerName: "Active (2 Day)",
-  //   flex: 1,
-  //   valueGetter: (params) => params.row.active - params.row.twoDayHist.active,
-  //   renderCell: renderHistCell,
-  //   sortable: false,
-  // },
   {
     field: "cases",
     headerName: "Confirmed (per 1M)",
     flex: 1,
     type: "number",
-    valueGetter: (params) => params.row.casesPerOneMillion
+    valueGetter: (params) => params.row.casesPerOneMillion,
   },
   {
     field: "casesHist",
     headerName: "Confirmed (2 Day)",
     flex: 1,
-    valueGetter: (params) => params.row.casesPerOneMillion - params.row.twoDayHist.casesPerOneMillion,
+    valueGetter: (params) =>
+      params.row.casesPerOneMillion - params.row.twoDayHist.casesPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
   },
@@ -80,13 +67,15 @@ export const countryPopCols: GridColDef[] = [
     headerName: "Deaths (per 1M)",
     flex: 1,
     type: "number",
-    valueGetter: (params) => params.row.deathsPerOneMillion
+    valueGetter: (params) => params.row.deathsPerOneMillion,
   },
   {
     field: "deathsHist",
     headerName: "Deaths (2 Day)",
     flex: 1,
-    valueGetter: (params) => params.row.deathsPerOneMillion - params.row.twoDayHist.deathsPerOneMillion,
+    valueGetter: (params) =>
+      params.row.deathsPerOneMillion -
+      params.row.twoDayHist.deathsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
   },
@@ -95,7 +84,7 @@ export const countryPopCols: GridColDef[] = [
     headerName: "Tests (per 1M)",
     flex: 1,
     type: "number",
-    valueGetter: (params) => params.row.testsPerOneMillion
+    valueGetter: (params) => params.row.testsPerOneMillion,
   },
   {
     field: "testHist",
@@ -353,12 +342,6 @@ export const stateTotalCols: GridColDef[] = [
     renderCell: renderHistCell,
     sortable: false,
   },
-  // {
-  //   field: "tests",
-  //   headerName: "Tests",
-  //   flex: 1,
-  //   type: "number",
-  // },
   {
     field: "updated",
     headerName: "Last Updated",
@@ -389,13 +372,14 @@ export const statePopCols: GridColDef[] = [
     headerName: "Cases (per 1M)",
     flex: 1,
     type: "number",
-    valueGetter: (params) => params.row.casesPerOneMillion
+    valueGetter: (params) => params.row.casesPerOneMillion,
   },
   {
     field: "casesHist",
     headerName: "Confirmed (1 Day)",
     flex: 1,
-    valueGetter: (params) => params.row.casesPerOneMillion - params.row.hist.casesPerOneMillion,
+    valueGetter: (params) =>
+      params.row.casesPerOneMillion - params.row.hist.casesPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
   },
@@ -404,13 +388,14 @@ export const statePopCols: GridColDef[] = [
     headerName: "Deaths (per 1M)",
     flex: 1,
     type: "number",
-    valueGetter: (params) => params.row.deathsPerOneMillion
+    valueGetter: (params) => params.row.deathsPerOneMillion,
   },
   {
     field: "deathsHist",
     headerName: "Deaths (1 Day)",
     flex: 1,
-    valueGetter: (params) => params.row.deathsPerOneMillion - params.row.hist.deathsPerOneMillion,
+    valueGetter: (params) =>
+      params.row.deathsPerOneMillion - params.row.hist.deathsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
   },
@@ -419,13 +404,14 @@ export const statePopCols: GridColDef[] = [
     headerName: "Tests (per 1M)",
     flex: 1,
     type: "number",
-    valueGetter: (params) => params.row.testsPerOneMillion
+    valueGetter: (params) => params.row.testsPerOneMillion,
   },
   {
     field: "testsHist",
     headerName: "Tests (1 Day)",
     flex: 1,
-    valueGetter: (params) => params.row.testsPerOneMillion - params.row.hist.testsPerOneMillion,
+    valueGetter: (params) =>
+      params.row.testsPerOneMillion - params.row.hist.testsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
   },
@@ -452,19 +438,42 @@ export const countyCols: GridColDef[] = [
     field: "cases",
     headerName: "Cases",
     flex: 1,
+    type: "number",
     valueGetter: (params: GridValueGetterParams) => params.row.stats.confirmed,
+  },
+  {
+    field: "casesHist",
+    headerName: "Cases (1 Day)",
+    flex: 1,
+
+    valueGetter: (params: GridValueGetterParams) => {
+      if (params.row.hist.confirmed !== undefined) {
+        return params.row.hist.confirmed;
+      } else {
+        return null;
+      }
+    },
+    renderCell: renderHistCell
   },
   {
     field: "deaths",
     headerName: "Deaths",
     flex: 1,
+    type: "number",
     valueGetter: (params: GridValueGetterParams) => params.row.stats.deaths,
   },
   {
-    field: "recovered",
-    headerName: "Recovered",
+    field: "deathsHist",
+    headerName: "Deaths (1 Day)",
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.recovered,
+    valueGetter: (params: GridValueGetterParams) => {
+      if (params.row.hist.deaths !== undefined) {
+        return params.row.hist.deaths;
+      } else {
+        return null;
+      }
+    },
+    renderCell: renderHistCell
   },
   {
     field: "updatedAt",

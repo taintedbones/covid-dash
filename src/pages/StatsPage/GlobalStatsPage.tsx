@@ -1,6 +1,6 @@
-import { Grid, MenuItem, Typography, Select, Paper } from "@mui/material";
+import { Grid, MenuItem, Select, Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Country, CountryJH } from "../../scripts/DataInterfaces";
 import { countryTotalCols, countryPopCols, provinceCols } from "./StatsCols";
 import TotalCard from "../MapPage/components/TotalCard";
@@ -76,21 +76,21 @@ function GlobalStatsPage() {
         const temp: Country[] = countries.map((country) => {
           const hist: any = countriesHist.find(
             (i: Country) => i.country === country.country
-            );
-            
-            return {
-              ...country,
-              twoDayHist: {
-                active: hist?.active,
-                cases: hist?.cases,
-                deaths: hist?.deaths,
-                recovered: hist?.recovered,
-                casesPerOneMillion: hist?.casesPerOneMillion,
-                deathsPerOneMillion: hist?.deathsPerOneMillion,
-                testsPerOneMillion: hist?.testsPerOneMillion,
-              },
-            };
-          });
+          );
+
+          return {
+            ...country,
+            twoDayHist: {
+              active: hist?.active,
+              cases: hist?.cases,
+              deaths: hist?.deaths,
+              recovered: hist?.recovered,
+              casesPerOneMillion: hist?.casesPerOneMillion,
+              deathsPerOneMillion: hist?.deathsPerOneMillion,
+              testsPerOneMillion: hist?.testsPerOneMillion,
+            },
+          };
+        });
         console.log(temp);
         setData(temp);
         setCountryList(temp);
@@ -182,7 +182,6 @@ function GlobalStatsPage() {
         items: [],
       });
       setDisableDataSelect(false);
-
     } else {
       setCountry(countryList.find((item) => item.country === countryName));
       setData(provinceList);
@@ -289,8 +288,11 @@ function GlobalStatsPage() {
             }}
           />
         </Grid>
-        {!country && <GlobalDataGraphs />}
-        {country && <CountryDataGraphs country={countryName} />}
+        {country ? (
+          <CountryDataGraphs country={countryName} />
+        ) : (
+          <GlobalDataGraphs />
+        )}
       </Grid>
     </div>
   );

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MapPage from "./MapPage";
-import GlobalDataGraphs from "../../Graphs/GlobalDataGraphs";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import {
   Country,
   CountryMapItem,
@@ -185,9 +184,9 @@ function GlobalMapPage() {
             }}
           />
         </Grid>
-        <Grid item container xs={12} spacing={2}>
+        {/* <Grid item container xs={12} spacing={2}>
           <GlobalDataGraphs />
-        </Grid>
+        </Grid> */}
       </Grid>
     </div>
   );

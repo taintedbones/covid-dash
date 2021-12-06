@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Grid,
-  MenuItem,
-  Typography,
-  Select,
-  Paper,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
+import { Grid, MenuItem, Select, Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { State, County } from "../../scripts/DataInterfaces";
 import { stateTotalCols, statePopCols, countyCols } from "./StatsCols";
@@ -52,6 +44,7 @@ function USStatsPage() {
     url: "https://www.worldometers.info/coronavirus/",
   });
   const [disableDataSelect, setDisableDataSelect] = useState<boolean>(false);
+  const [cntysFetched, setCntysFetched] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchState = async () => {
@@ -117,6 +110,10 @@ function USStatsPage() {
         const temp: any[] = r.data;
         const counties: County[] = temp.map((county, idx) => ({
           ...county,
+          hist: {
+            confirmed: null,
+            deaths: null,
+          },
           id: idx,
         }));
 
@@ -144,6 +141,45 @@ function USStatsPage() {
   }, []);
 
   useEffect(() => {
+    const fetchCountiesHistory = async (stateName) => {
+      setLoading(true);
+      try {
+        const r = await axios.get(
+          "https://disease.sh/v3/covid-19/historical/usacounties/" +
+            stateName.toLowerCase() +
+            "?lastdays=1"
+        );
+
+        let temp = countyList.slice();
+
+        r.data.forEach((item) => {
+          const idx = temp.findIndex(
+            (cnty) => cnty.county.toLowerCase() === item.county
+          );
+
+          if (idx !== -1) {
+            const confirmed = Object.values(item.timeline.cases)[0];
+            const deaths = Object.values(item.timeline.deaths)[0];
+
+            temp[idx].hist = {
+              confirmed: Number(confirmed),
+              deaths: Number(deaths),
+            };
+          }
+        });
+
+        let ctyFetchList = cntysFetched.slice();
+        ctyFetchList.push(stateName);
+
+        setCntysFetched(ctyFetchList);
+        setCountyList(temp);
+        setData(temp);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     if (stateName === "All") {
       setState(undefined);
       setData(stateList);
@@ -157,9 +193,14 @@ function USStatsPage() {
       });
       setDisableDataSelect(false);
     } else {
-      setState(stateList.find((item) => item.state === stateName));
-      setData(countyList);
+      setData([]);
+      if (!cntysFetched.find((i) => i === stateName)) {
+        fetchCountiesHistory(stateName);
+      } else {
+        setData(countyList);
+      }
       setCols(countyCols);
+      setState(stateList.find((item) => item.state === stateName));
       setDataSource({
         name: "John Hopkins University",
         url: "https://coronavirus.jhu.edu/",
@@ -190,7 +231,6 @@ function USStatsPage() {
       <Grid container spacing={2}>
         <Grid item container spacing={2} xs={12} justifyContent="space-between">
           <Grid item container xs={4}>
-            {/* <Typography variant="h4">US Statistics</Typography> */}
             <TableHeader
               setShowPop={setDataPerPop}
               disabled={disableDataSelect}
@@ -204,15 +244,24 @@ function USStatsPage() {
               <MenuItem value="All">All</MenuItem>
               {stateNames &&
                 stateNames.map((item) => (
-                  <MenuItem value={item}>{item}</MenuItem>
+                  <MenuItem value={item} key={item}>
+                    {item}
+                  </MenuItem>
                 ))}
             </Select>
           </Grid>
           {state && (
             <Grid item container xs={8} spacing={2} justifyContent="flex-end">
-              <Grid item xs={3} style={{ height: "120px" }}>
-                <Paper style={styling.paper}>
-                  <img src={state?.flag} alt="" height="80px" />
+              <Grid item xs={3} style={{ height: "auto" }}>
+                <Paper
+                  style={styling.paper}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={state?.flag} alt="" height="85px" />
                 </Paper>
               </Grid>
               <TotalCard

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Link,
@@ -6,7 +6,6 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 
 export function TableFooter(props: { sourceName; sourceUrl }) {
   return (
@@ -28,7 +27,7 @@ export function TableFooter(props: { sourceName; sourceUrl }) {
   );
 }
 
-export function TableHeader({setShowPop, disabled} ) {
+export function TableHeader({ setShowPop, disabled }) {
   const [view, setView] = useState<any>("total");
   return (
     <Box
@@ -37,11 +36,16 @@ export function TableHeader({setShowPop, disabled} ) {
         justifyContent: "flex-end",
         alignItems: "center",
         height: "50px",
-        paddingBottom: "20px"
+        paddingBottom: "20px",
       }}
     >
       <Typography sx={{ paddingRight: " 10px" }}>Data View: </Typography>
-      <ToggleButtonGroup value={view} exclusive sx={{ height: "50px" }} disabled={disabled}>
+      <ToggleButtonGroup
+        value={view}
+        exclusive
+        sx={{ height: "50px" }}
+        disabled={disabled}
+      >
         <ToggleButton
           value="total"
           onClick={() => {

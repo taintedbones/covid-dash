@@ -12,6 +12,10 @@ export interface County {
     latitude: string;
     longitude: string;
   };
+  hist: {
+    confirmed: number | null;
+    deaths: number | null;
+  }
 }
 
 // For Country data return from Worldmeters
@@ -89,6 +93,7 @@ export interface DataTotal {
   cases: number;
   todayCases: number;
   deaths: number;
+  todayDeaths: number;
   recovered: number;
   todayRecovered: number;
   active: number;

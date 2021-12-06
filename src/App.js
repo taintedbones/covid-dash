@@ -6,8 +6,9 @@ import GlobalMapPage from "./pages/MapPage/GlobalMapPage";
 import USMapPage from "./pages/MapPage/USMapPage";
 import GlobalVaccinesPage from "./pages/VaccinePage/GlobalVaccinesPage";
 import USVaccinesPage from "./pages/VaccinePage/USVaccinesPage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar/NavBar";
+import AppFooter from "./NavBar/AppFooter";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import "@fontsource/roboto/400.css";
 
@@ -23,7 +24,7 @@ function App() {
       <CssBaseline />
       <Router>
         <NavBar />
-        <div style={{ padding: "80px 20px 10px" }}>
+        <div style={{ padding: "80px 40px" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/statistics" element={<GlobalStatsPage />} />
@@ -34,6 +35,7 @@ function App() {
             <Route path="/vaccines/us" element={<USVaccinesPage />} />
           </Routes>
         </div>
+        <AppFooter />
       </Router>
     </ThemeProvider>
   );

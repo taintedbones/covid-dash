@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import VaccinesPage from "./VaccinePage";
 import { getCountryISO3 } from "../../scripts/CountryISO3Match";
 import { countryVaxCols } from "./VaccineCols";
@@ -11,9 +11,6 @@ function GlobalVaccinesPage() {
   const [tableData, setTableData] = useState<any[]>([]);
   const [mapData, setMapData] = useState<any[]>([]);
   const [timeline, setTimeline] = useState<any[]>([]);
-  const [sortModel, setSortModel] = useState<any[]>([{}]);
-
-  // simple data of global totals for past 10 days
 
   useEffect(() => {
     // full data of global total for today
@@ -35,29 +32,32 @@ function GlobalVaccinesPage() {
           "https://disease.sh/v3/covid-19/vaccine/coverage/countries?lastdays=3&fullData=true"
         );
 
-        setTableData(r.data.map((country, idx) => ({
+        setTableData(
+          r.data.map((country, idx) => ({
             ...country,
-            id: idx
-        })));
+            id: idx,
+          }))
+        );
 
-        setMapData(r.data.map((country) => ({
+        setMapData(
+          r.data.map((country) => ({
             id: getCountryISO3(country.country),
-            value: country.timeline[1].total
-        })));
-
+            value: country.timeline[1].total,
+          }))
+        );
       } catch (err) {
         console.error(err);
       }
     };
 
     const fetchTimeline = async () => {
-        try {
-            const r = await axios.get("https://disease.sh/v3/covid-19/vaccine/coverage?lastdays=10&fullData=false");
-            console.log(r.data);
-            setTimeline([{id: "Vaccinations", data: parseData(r.data)}]);
-        } catch (err) {
-
-        }
+      try {
+        const r = await axios.get(
+          "https://disease.sh/v3/covid-19/vaccine/coverage?lastdays=10&fullData=false"
+        );
+        console.log(r.data);
+        setTimeline([{ id: "Vaccinations", data: parseData(r.data) }]);
+      } catch (err) {}
     };
 
     fetchGlobalTotal();
@@ -76,15 +76,15 @@ function GlobalVaccinesPage() {
         mapData={mapData}
         timeline={timeline}
         mapConfig={{
-            proj: {
-              min: 125,
-              max: 600,
-            },
-            y: 0.63,
-            features: feats.features,
-            label: "properties.name",
-            colors: "PuBu"
-          }}
+          proj: {
+            min: 125,
+            max: 600,
+          },
+          y: 0.63,
+          features: feats.features,
+          label: "properties.name",
+          colors: "nivo",
+        }}
       />
     </div>
   );

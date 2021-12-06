@@ -7,9 +7,6 @@ import axios from "axios";
 function CountryDataGraphs({ country }) {
   const [cases, setCases] = useState<any[]>([]);
   const [deaths, setDeaths] = useState<any[]>([]);
-  const [recovered, setRecovered] = useState<any[]>([]);
-  const [countries, setCountries] = useState<any[]>([]);
-  console.log(country);
 
   useEffect(() => {
     const fetchGlobalHistory = async () => {
@@ -19,7 +16,6 @@ function CountryDataGraphs({ country }) {
             country +
             "?lastdays=10"
         );
-        const temp: any[] = r.data;
 
         setCases([{ id: "Cases", data: parseData(r.data.timeline.cases) }]);
         setDeaths([{ id: "Deaths", data: parseData(r.data.timeline.deaths) }]);
