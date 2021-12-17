@@ -6,13 +6,13 @@ function LineGraph({ title, data }) {
   return (
     <React.Fragment>
       <Grid item xs={12}>
-        <Typography variant="h5">{title}</Typography>
+        <Typography variant="h5">{title} (10 Day Period)</Typography>
       </Grid>
       <Grid item xs={12} sx={{ height: "500px", width: "100%" }}>
         <Paper style={{ height: "inherit", padding: "10px", color: "black" }}>
           <ResponsiveLine
             data={data}
-            margin={{ top: 10, right: 130, bottom: 70, left: 70 }}
+            margin={{ top: 10, right: 100, bottom: 70, left: 85 }}
             xScale={{ type: "point" }}
             yScale={{
               type: "linear",
@@ -21,7 +21,7 @@ function LineGraph({ title, data }) {
               stacked: true,
               reverse: false,
             }}
-            yFormat=">-.1f"
+            yFormat=">-.3s"
             curve="natural"
             axisTop={null}
             axisRight={null}
@@ -38,7 +38,7 @@ function LineGraph({ title, data }) {
               tickPadding: 5,
               tickRotation: 0,
               legend: "Cases (per million)",
-              legendOffset: -60,
+              legendOffset: -75,
               legendPosition: "middle",
             }}
             pointSize={7}
@@ -55,11 +55,11 @@ function LineGraph({ title, data }) {
                 anchor: "top-right",
                 direction: "column",
                 justify: false,
-                translateX: 100,
+                translateX: 80,
                 translateY: 0,
                 itemsSpacing: 0,
                 itemDirection: "left-to-right",
-                itemWidth: 80,
+                itemWidth: 50,
                 itemHeight: 20,
                 itemOpacity: 0.75,
                 symbolSize: 12,

@@ -21,8 +21,13 @@ function MapPage({
 }) {
   return (
     <div>
-      <Grid item container spacing={2} justifyContent="space-evenly">
-        {totals && <Grid item xs={12}>Updated: {new Date(totals.updated).toUTCString()}</Grid>}
+      <Grid
+        item
+        container
+        spacing={2}
+        justifyContent="space-evenly"
+        alignItems="flex-start"
+      >
         {totals && (
           <Grid
             item
@@ -58,11 +63,6 @@ function MapPage({
             />
           </Grid>
         )}
-        <Grid item xs={3}>
-          <Typography variant="h4" align="center">
-            {title}
-          </Typography>
-        </Grid>
         <Grid item xs={9}>
           <ToggleButtonGroup
             value={view}
@@ -75,9 +75,21 @@ function MapPage({
             <ToggleButton value="deaths">Deaths</ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Grid item xs={3} style={{ width: "100%", height: "680px" }}>
-          <Paper style={{ height: "100%" }}>
-            <SummaryList data={data} loading={loading} columns={cols} />
+        {totals && (
+          <Grid item xs={3}>
+            Updated: {new Date(totals.updated).toUTCString()}
+          </Grid>
+        )}
+        <Grid item container xs={3} style={{ height: "680px" }}>
+          <Paper style={{ width: "100%", height: "100%" }}>
+            <Grid item xs={12}>
+              <Typography variant="h5" align="center">
+                {title}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} style={{height: "100%" }}>
+              <SummaryList data={data} loading={loading} columns={cols} />
+            </Grid>
           </Paper>
         </Grid>
         <Grid item container xs={9} spacing={2}>

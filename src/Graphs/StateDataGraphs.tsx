@@ -18,6 +18,7 @@ function StateDataGraph({state}){
             state.toLowerCase() +
               "?lastdays=10"
           );
+          console.log(r.data);
   
           setCases([{ id: "Cases", data: parseData(r.data.timeline.cases) }]);
           setDeaths([{ id: "Deaths", data: parseData(r.data.timeline.deaths) }]);

@@ -9,26 +9,24 @@ function SummaryList({ data, loading, columns }) {
   ]);
   return (
     <React.Fragment>
-      <Grid item xs={12} style={{ width: "100%", height: "100%" }}>
-        <DataGrid
-          sortModel={sortModel}
-          onSortModelChange={(model) => setSortModel(model)}
-          columns={columns}
-          rows={data}
-          loading={loading}
-          style={{ width: "100%", height: "100%" }}
-          density="compact"
-          components={{
-            Footer: TableFooter,
-          }}
-          componentsProps={{
-            footer: {
-              sourceName: "Worldometers",
-              sourceUrl: "https://www.worldometers.info/coronavirus/",
-            },
-          }}
-        />
-      </Grid>
+      <DataGrid
+        sortModel={sortModel}
+        onSortModelChange={(model) => setSortModel(model)}
+        columns={columns}
+        rows={data}
+        loading={loading}
+        style={{ width: "100%", height: "95%" }}
+        density="compact"
+        components={{
+          Footer: TableFooter,
+        }}
+        componentsProps={{
+          footer: {
+            sourceName: "Worldometers",
+            sourceUrl: "https://www.worldometers.info/coronavirus/",
+          },
+        }}
+      />
     </React.Fragment>
   );
 }

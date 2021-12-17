@@ -4,6 +4,7 @@ import { State, StateMapItem, Country } from "../../scripts/DataInterfaces";
 import { getUSFlag } from "../../scripts/USFlagMatch";
 import feats from "./MapFeatures/us_states_albers.json";
 import axios from "axios";
+import { Grid, Typography } from "@mui/material";
 
 function USMapPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -16,7 +17,7 @@ function USMapPage() {
   const [activeCases, setActiveCases] = useState<StateMapItem[]>([]);
   const [recoveredCases, setRecoveredCases] = useState<StateMapItem[]>([]);
   const [deathsCases, setDeathsCases] = useState<StateMapItem[]>([]);
-  const [mapDomain, setMapDomain] = useState<number[]>([0,1000000]);
+  const [mapDomain, setMapDomain] = useState<number[]>([0, 1000000]);
 
   const columns = [
     {
@@ -45,13 +46,13 @@ function USMapPage() {
 
   const getMax = (arr) => {
     let max = 0;
-    for(let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       if (arr[i].value > max) {
         max = arr[i].value;
       }
     }
     return max;
-  }
+  };
 
   useEffect(() => {
     const fetchStates = async () => {
@@ -60,17 +61,16 @@ function USMapPage() {
         const r = await axios.get("https://disease.sh/v3/covid-19/states");
         const temp: any[] = r.data;
         const stateList: State[] = temp.map((state, idx) => ({
-            ...state,
-            id: idx,
-            flag: getUSFlag(state.state),
-          }
-        ));
+          ...state,
+          id: idx,
+          flag: getUSFlag(state.state),
+        }));
 
         const tempStates = stateList.map((state: any) => ({
           id: state.state,
           value: state.cases,
           state: state.state,
-          flag: state.flag
+          flag: state.flag,
         }));
 
         setMapDomain([0, getMax(tempStates)]);
@@ -80,7 +80,7 @@ function USMapPage() {
             id: state.state,
             value: state.cases,
             state: state.state,
-            flag: state.flag
+            flag: state.flag,
           }))
         );
         setActiveCases(
@@ -88,7 +88,7 @@ function USMapPage() {
             id: state.state,
             value: state.active,
             state: state.state,
-            flag: state.flag
+            flag: state.flag,
           }))
         );
         setRecoveredCases(
@@ -96,7 +96,7 @@ function USMapPage() {
             id: state.state,
             value: state.recovered,
             state: state.state,
-            flag: state.flag
+            flag: state.flag,
           }))
         );
         setDeathsCases(
@@ -104,7 +104,7 @@ function USMapPage() {
             id: state.state,
             value: state.deaths,
             state: state.state,
-            flag: state.flag
+            flag: state.flag,
           }))
         );
 
@@ -179,7 +179,7 @@ function USMapPage() {
           features: feats.features,
           label: "properties.state_name",
           colors: "YlOrRd",
-          domain: mapDomain
+          domain: mapDomain,
         }}
       />
     </div>

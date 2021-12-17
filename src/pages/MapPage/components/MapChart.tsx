@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ResponsiveChoroplethCanvas } from "@nivo/geo";
 import { Grid, Slider, Paper, Button, Typography } from "@mui/material";
+import * as d3 from "d3";
 
 function MapChart({ data, mapConfig }) {
   const defaultX = 0.5;
@@ -68,8 +69,14 @@ function MapChart({ data, mapConfig }) {
           </Paper>
         </Grid>
         <Grid item container xs={12}>
-          <Paper style={{width: "100%", padding: "10px"}}>
-            <Grid item container xs={12} alignItems="center" justifyContent="space-around">
+          <Paper style={{ width: "100%", padding: "10px" }}>
+            <Grid
+              item
+              container
+              xs={12}
+              alignItems="center"
+              justifyContent="space-around"
+            >
               <Grid item container xs={3}>
                 <Grid item xs={3}>
                   <Typography variant="button">Zoom:</Typography>

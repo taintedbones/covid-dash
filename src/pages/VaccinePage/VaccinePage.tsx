@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import TotalCard from "../MapPage/components/TotalCard";
 import MapChart from "../MapPage/components/MapChart";
@@ -77,7 +77,7 @@ function VaccinesPage({
         </Grid>
         <Grid item container xs={5}>
           <LineGraph
-            title="Total Administered (10 Day Period)"
+            title="Total Administered"
             data={timeline}
           />
         </Grid>

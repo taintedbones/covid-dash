@@ -25,7 +25,7 @@ function HomePage() {
 
   const resourceButton = (text, url) => (
     <Link href={url} target="_blank" rel="noopener">
-      <Button variant="contained" sx={{ width: "100%", height: "100px" }}>
+      <Button variant="outlined" sx={{ width: "100%", height: "75px" }}>
         <Typography variant="h6">{text}</Typography>
       </Button>
     </Link>
@@ -92,32 +92,32 @@ function HomePage() {
             </Grid>
           )}
         </Grid>
-        <Grid item container xs={12} spacing={4}>
+        <Grid item container xs={12} spacing={4} alignItems="flex-start">
           <Grid item container xs={6} spacing={2} justifyContent="center">
             <Grid item xs={12}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h4">
                 COVID-19 Resources
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={10}>
               {resourceButton(
                 "About COVID-19 (CDC.gov)",
                 "https://www.cdc.gov/coronavirus/2019-ncov/your-health/about-covid-19/basics-covid-19.html"
               )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={10}>
               {resourceButton(
                 "Testing for COVID-19 (CDC.gov)",
                 "https://www.cdc.gov/coronavirus/2019-ncov/testing/index.html"
               )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={10}>
               {resourceButton(
                 "Vaccines for COVID-19 (CDC.gov)",
                 "https://www.cdc.gov/coronavirus/2019-ncov/vaccines/index.html"
               )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={10}>
               {resourceButton(
                 "Find COVID-19 Vaccines & Boosters (US)",
                 "https://www.vaccines.gov/"
@@ -151,6 +151,7 @@ function HomePage() {
                   Countries/States not reporting data for large periods of time
                 </li>
                 <li>Researchers deeming data as unreliable</li>
+                <li>Timezone differences resulting in data that is not updated</li>
               </ul>
             </Typography>
           </Grid>

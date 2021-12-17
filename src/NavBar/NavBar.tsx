@@ -27,12 +27,15 @@ function NavBar() {
     link: {
       textDecoration: "none",
     },
-  }
+    button: {
+      // width: "100%",
+    },
+  };
 
   const handleUSClose = () => {
     setUsMenuAnchor(null);
   };
-  const handleGlobalClose = () => { 
+  const handleGlobalClose = () => {
     setGlobalMenuAnchor(null);
   };
   const handleVaxClose = () => {
@@ -42,150 +45,163 @@ function NavBar() {
   return (
     <div>
       <AppBar position="fixed">
-        <Toolbar style={{ justifyContent: "space-between", alignItems: "center" }} variant="dense">
-          <Link to="/" style={styles.link}>
-            <Button
-              variant="text"
-              sx={{ marginRight: "50px", paddingTop: "10px" }}
-              onClick={() => setTitle("")}
-            >
-              <Grid container>
-                <Grid item>
-                  <Typography variant="h4"><MdOutlineCoronavirus /></Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="h5"> COVID-19 Dashboard</Typography>
-                </Grid>
+        <Toolbar variant="dense">
+          <Grid container spacing={1} alignItems="center" justifyContent="space-between">
+            <Grid item container xs={4}>
+              <Link to="/" style={styles.link}>
+                <Button
+                  variant="text"
+                  style={styles.button}
+                  onClick={() => setTitle("")}
+                >
+                  <Grid item container xs={12} alignItems="center">
+                    <Grid item>
+                      <Typography variant="h4" style={{position: "relative", top: "5px"}}>
+                        <MdOutlineCoronavirus />
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="h5"> COVID-19 Dashboard</Typography>
+                    </Grid>
+                  </Grid>
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="h5">{title}</Typography>
+            </Grid>
+            <Grid item container xs={4} spacing={1} justifyContent="flex-end">
+              <Grid item>
+                <Button
+                  variant="contained"
+                  style={styles.button}
+                  onClick={(e) => setUsMenuAnchor(e.currentTarget)}
+                  endIcon={<KeyboardArrowDown />}
+                >
+                  US Data
+                </Button>
               </Grid>
-            </Button>
-          </Link>
-          <Typography variant="h5">{title}</Typography>
-          <div>
-            <Button
-              variant="contained"
-              sx={{ marginRight: "10px" }}
-              onClick={(e) => setUsMenuAnchor(e.currentTarget)}
-              endIcon={<KeyboardArrowDown />}
-            >
-              US Data
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={usMenuAnchor}
-              open={openUSMenu}
-              onClose={handleUSClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <Link to="/map/us" style={styles.link}>
-                <MenuItem
-                  onClick={() => {
-                    setTitle("US Map");
-                    handleUSClose();
-                  }}
-                  sx={{ color: "white" }}
+              <Menu
+                id="basic-menu"
+                anchorEl={usMenuAnchor}
+                open={openUSMenu}
+                onClose={handleUSClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <Link to="/map/us" style={styles.link}>
+                  <MenuItem
+                    onClick={() => {
+                      setTitle("US Map");
+                      handleUSClose();
+                    }}
+                    sx={{ color: "white" }}
+                  >
+                    US Map
+                  </MenuItem>
+                </Link>
+                <Divider />
+                <Link to="/statistics/us" style={styles.link}>
+                  <MenuItem
+                    onClick={() => {
+                      setTitle("US Statistics");
+                      handleUSClose();
+                    }}
+                    sx={{ color: "white" }}
+                  >
+                    US Statistics
+                  </MenuItem>
+                </Link>
+              </Menu>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  style={styles.button}
+                  onClick={(e) => setGlobalMenuAnchor(e.currentTarget)}
+                  endIcon={<KeyboardArrowDown />}
                 >
-                  US Map
-                </MenuItem>
-              </Link>
-              <Divider />
-              <Link to="/statistics/us" style={styles.link}>
-                <MenuItem
-                  onClick={() => {
-                    setTitle("US Statistics");
-                    handleUSClose();
-                  }}
-                  sx={{ color: "white" }}
+                  Global Data
+                </Button>
+              </Grid>
+              <Menu
+                id="basic-menu"
+                anchorEl={globalMenuAnchor}
+                open={openGlobalMenu}
+                onClose={handleGlobalClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <Link to="/map" style={styles.link}>
+                  <MenuItem
+                    onClick={() => {
+                      setTitle("Global Map");
+                      handleGlobalClose();
+                    }}
+                    sx={{ color: "white" }}
+                  >
+                    Global Map
+                  </MenuItem>
+                </Link>
+                <Divider />
+                <Link to="/statistics" style={styles.link}>
+                  <MenuItem
+                    onClick={() => {
+                      setTitle("Global Statistics");
+                      handleGlobalClose();
+                    }}
+                    sx={{ color: "white" }}
+                  >
+                    Global Statistics
+                  </MenuItem>
+                </Link>
+              </Menu>
+              <Grid item xs>
+                <Button
+                  variant="contained"
+                  style={styles.button}
+                  onClick={(e) => setVaxMenuAnchor(e.currentTarget)}
+                  endIcon={<KeyboardArrowDown />}
                 >
-                  US Statistics
-                </MenuItem>
-              </Link>
-            </Menu>
-
-            <Button
-              variant="contained"
-              sx={{ marginRight: "10px" }}
-              onClick={(e) => setGlobalMenuAnchor(e.currentTarget)}
-              endIcon={<KeyboardArrowDown />}
-            >
-              Global Data
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={globalMenuAnchor}
-              open={openGlobalMenu}
-              onClose={handleGlobalClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <Link to="/map" style={styles.link}>
-                <MenuItem
-                  onClick={() => {
-                    setTitle("Global Map");
-                    handleGlobalClose();
-                  }}
-                  sx={{ color: "white" }}
-                >
-                  Global Map
-                </MenuItem>
-              </Link>
-              <Divider />
-              <Link to="/statistics" style={styles.link}>
-                <MenuItem
-                  onClick={() => {
-                    setTitle("Global Statistics");
-                    handleGlobalClose();
-                  }}
-                  sx={{ color: "white" }}
-                >
-                  Global Statistics
-                </MenuItem>
-              </Link>
-            </Menu>
-            <Button
-              variant="contained"
-              sx={{ marginRight: "10px" }}
-              onClick={(e) => setVaxMenuAnchor(e.currentTarget)}
-              endIcon={<KeyboardArrowDown />}
-            >
-              Vaccine Data
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={vaxMenuAnchor}
-              open={openVaxMenu}
-              onClose={handleVaxClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <Link to="/vaccines/us" style={styles.link}>
-                <MenuItem
-                  onClick={() => {
-                    setTitle("US Vaccines");
-                    handleVaxClose();
-                  }}
-                  sx={{ color: "white" }}
-                >
-                  US Vaccine Data
-                </MenuItem>
-              </Link>
-              <Divider />
-              <Link to="/vaccines" style={styles.link}>
-                <MenuItem
-                  onClick={() => {
-                    setTitle("Global Vaccines");
-                    handleVaxClose();
-                  }}
-                  sx={{ color: "white" }}
-                >
-                  Global Vaccine Data
-                </MenuItem>
-              </Link>
-            </Menu>
-          </div>
+                  Vaccine Data
+                </Button>
+              </Grid>
+              <Menu
+                id="basic-menu"
+                anchorEl={vaxMenuAnchor}
+                open={openVaxMenu}
+                onClose={handleVaxClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <Link to="/vaccines/us" style={styles.link}>
+                  <MenuItem
+                    onClick={() => {
+                      setTitle("US Vaccines");
+                      handleVaxClose();
+                    }}
+                    sx={{ color: "white" }}
+                  >
+                    US Vaccine Data
+                  </MenuItem>
+                </Link>
+                <Divider />
+                <Link to="/vaccines" style={styles.link}>
+                  <MenuItem
+                    onClick={() => {
+                      setTitle("Global Vaccines");
+                      handleVaxClose();
+                    }}
+                    sx={{ color: "white" }}
+                  >
+                    Global Vaccine Data
+                  </MenuItem>
+                </Link>
+              </Menu>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </div>

@@ -14,7 +14,7 @@ function USDataGraph() {
 
       const stats = dates.map((item, idx) => ({
         x: item,
-        y: values[idx] / 1000000,
+        y: values[idx],
       }));
 
       return stats;
