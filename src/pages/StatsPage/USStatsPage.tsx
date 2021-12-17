@@ -147,7 +147,7 @@ function USStatsPage() {
         const r = await axios.get(
           "https://disease.sh/v3/covid-19/historical/usacounties/" +
             stateName.toLowerCase() +
-            "?lastdays=1"
+            "?lastdays=2"
         );
 
         let temp = countyList.slice();

@@ -8,7 +8,7 @@ import GlobalVaccinesPage from "./pages/VaccinePage/GlobalVaccinesPage";
 import USVaccinesPage from "./pages/VaccinePage/USVaccinesPage";
 import NavBar from "./NavBar/NavBar";
 import AppFooter from "./NavBar/AppFooter";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import "@fontsource/roboto/400.css";
 
@@ -22,7 +22,7 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Router>
+      <HashRouter basename="/">
         <NavBar />
         <div style={{ padding: "80px 40px" }}>
           <Routes>
@@ -36,7 +36,7 @@ function App() {
           </Routes>
         </div>
         <AppFooter />
-      </Router>
+      </HashRouter>
     </ThemeProvider>
   );
 }

@@ -11,6 +11,17 @@ function GlobalVaccinesPage() {
   const [tableData, setTableData] = useState<any[]>([]);
   const [mapData, setMapData] = useState<any[]>([]);
   const [timeline, setTimeline] = useState<any[]>([]);
+  const [mapDomain, setMapDomain] = useState<number[]>([0, 1000000]);
+
+  const getMax = (arr) => {
+    let max = 0;
+    for(let i = 0; i < arr.length; i++) {
+      if (arr[i].value > max) {
+        max = arr[i].value;
+      }
+    }
+    return max;
+  }
 
   useEffect(() => {
     // full data of global total for today
@@ -39,12 +50,12 @@ function GlobalVaccinesPage() {
           }))
         );
 
-        setMapData(
-          r.data.map((country) => ({
-            id: getCountryISO3(country.country),
-            value: country.timeline[1].total,
-          }))
-        );
+        const temp = r.data.map((country) => ({
+          id: getCountryISO3(country.country),
+          value: country.timeline[1].total,
+        }));
+        setMapDomain([0, getMax(temp)]);
+        setMapData(temp);
       } catch (err) {
         console.error(err);
       }
@@ -84,6 +95,7 @@ function GlobalVaccinesPage() {
           features: feats.features,
           label: "properties.name",
           colors: "nivo",
+          domain: mapDomain
         }}
       />
     </div>

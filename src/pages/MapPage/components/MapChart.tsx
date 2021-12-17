@@ -24,7 +24,7 @@ function MapChart({ data, mapConfig }) {
 
   return (
     <React.Fragment>
-      <Grid item container xs={12} spacing={2}>
+      <Grid item container xs={12} spacing={1}>
         <Grid item container xs={12}>
           <Paper style={styling.paper}>
             <Grid item xs={12} style={styling.grid}>
@@ -33,7 +33,7 @@ function MapChart({ data, mapConfig }) {
                 features={mapConfig.features}
                 margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                 colors={mapConfig.colors}
-                domain={[0, 1000000]}
+                domain={mapConfig.domain}
                 unknownColor="#8c8c8c"
                 label={mapConfig.label}
                 valueFormat=".2s"
@@ -67,62 +67,66 @@ function MapChart({ data, mapConfig }) {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item container xs={12} spacing={4}>
-          <Grid item container xs={3.5} sx={{ padding: "5px" }}>
-            <Grid item xs={3}>
-              <Typography variant="button">Zoom:</Typography>
+        <Grid item container xs={12}>
+          <Paper style={{width: "100%", padding: "10px"}}>
+            <Grid item container xs={12} alignItems="center" justifyContent="space-around">
+              <Grid item container xs={3}>
+                <Grid item xs={3}>
+                  <Typography variant="button">Zoom:</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <Slider
+                    value={projScale}
+                    step={10}
+                    min={mapConfig.proj.min}
+                    max={mapConfig.proj.max}
+                    onChange={(event, value) => setProjScale(value)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item container xs={3}>
+                <Grid item xs={3}>
+                  <Typography variant="button">Move X:</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <Slider
+                    value={x}
+                    step={0.1}
+                    track="inverted"
+                    min={-1}
+                    max={1}
+                    onChange={(event, value) => setX(value)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item container xs={3}>
+                <Grid item xs={3}>
+                  <Typography variant="button">Move Y:</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <Slider
+                    value={y}
+                    step={0.1}
+                    min={-1}
+                    max={1}
+                    onChange={(event, value) => setY(value)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={1}>
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    setX(defaultX);
+                    setY(defaultY);
+                    setProjScale(defaultProj);
+                  }}
+                >
+                  Reset
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={9}>
-              <Slider
-                value={projScale}
-                step={10}
-                min={mapConfig.proj.min}
-                max={mapConfig.proj.max}
-                onChange={(event, value) => setProjScale(value)}
-              />
-            </Grid>
-          </Grid>
-          <Grid item container xs={3.5} sx={{ padding: "5px" }}>
-            <Grid item xs={3}>
-              <Typography variant="button">Move X:</Typography>
-            </Grid>
-            <Grid item xs={9}>
-              <Slider
-                value={x}
-                step={0.1}
-                track="inverted"
-                min={-1}
-                max={1}
-                onChange={(event, value) => setX(value)}
-              />
-            </Grid>
-          </Grid>
-          <Grid item container xs={3.5} sx={{ padding: "5px" }}>
-            <Grid item xs={3}>
-              <Typography variant="button">Move Y:</Typography>
-            </Grid>
-            <Grid item xs={9}>
-              <Slider
-                value={y}
-                step={0.1}
-                min={-1}
-                max={1}
-                onChange={(event, value) => setY(value)}
-              />
-            </Grid>
-          </Grid>
-          <Grid item xs={0.5}>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                setX(defaultX);
-                setY(defaultY);
-                setProjScale(defaultProj);
-              }}
-            >
-              Reset
-            </Button>
-        </Grid>
+          </Paper>
         </Grid>
       </Grid>
     </React.Fragment>

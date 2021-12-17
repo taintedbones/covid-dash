@@ -16,6 +16,7 @@ function USMapPage() {
   const [activeCases, setActiveCases] = useState<StateMapItem[]>([]);
   const [recoveredCases, setRecoveredCases] = useState<StateMapItem[]>([]);
   const [deathsCases, setDeathsCases] = useState<StateMapItem[]>([]);
+  const [mapDomain, setMapDomain] = useState<number[]>([0,1000000]);
 
   const columns = [
     {
@@ -42,6 +43,16 @@ function USMapPage() {
     },
   ];
 
+  const getMax = (arr) => {
+    let max = 0;
+    for(let i = 0; i < arr.length; i++) {
+      if (arr[i].value > max) {
+        max = arr[i].value;
+      }
+    }
+    return max;
+  }
+
   useEffect(() => {
     const fetchStates = async () => {
       setLoading(true);
@@ -55,14 +66,15 @@ function USMapPage() {
           }
         ));
 
-        setData(
-          stateList.map((state: any) => ({
-            id: state.state,
-            value: state.cases,
-            state: state.state,
-            flag: state.flag
-          }))
-        );
+        const tempStates = stateList.map((state: any) => ({
+          id: state.state,
+          value: state.cases,
+          state: state.state,
+          flag: state.flag
+        }));
+
+        setMapDomain([0, getMax(tempStates)]);
+        setData(tempStates);
         setConfirmedCases(
           stateList.map((state: any) => ({
             id: state.state,
@@ -132,15 +144,19 @@ function USMapPage() {
     if (view === "cases") {
       setTitle("Confirmed Cases");
       setData(confirmedCases);
+      setMapDomain([0, getMax(confirmedCases)]);
     } else if (view === "active") {
       setTitle("Active Cases");
       setData(activeCases);
+      setMapDomain([0, getMax(activeCases)]);
     } else if (view === "recovered") {
       setTitle("Recovered Cases");
       setData(recoveredCases);
+      setMapDomain([0, getMax(recoveredCases)]);
     } else if (view === "deaths") {
       setTitle("Deaths");
       setData(deathsCases);
+      setMapDomain([0, getMax(deathsCases)]);
     }
   }, [view]);
 
@@ -163,7 +179,7 @@ function USMapPage() {
           features: feats.features,
           label: "properties.state_name",
           colors: "YlOrRd",
-          // borderColor: "#000000"
+          domain: mapDomain
         }}
       />
     </div>

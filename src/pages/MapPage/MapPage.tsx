@@ -75,7 +75,7 @@ function MapPage({
             <ToggleButton value="deaths">Deaths</ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Grid item xs={3} style={{ width: "100%", height: "670px" }}>
+        <Grid item xs={3} style={{ width: "100%", height: "680px" }}>
           <Paper style={{ height: "100%" }}>
             <SummaryList data={data} loading={loading} columns={cols} />
           </Paper>

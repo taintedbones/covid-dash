@@ -216,7 +216,7 @@ export const provinceCols: GridColDef[] = [
     headerName: "Confirmed (2 Day)",
     flex: 1,
     valueGetter: (params) => {
-      if (params.row.stats.confirmed && params.row.twoDayHist.confirmed) {
+      if (params.row.stats.confirmed !== null && params.row.twoDayHist.confirmed !== null) {
         return params.row.stats.confirmed - params.row.twoDayHist.confirmed;
       }
     },
@@ -448,7 +448,7 @@ export const countyCols: GridColDef[] = [
 
     valueGetter: (params: GridValueGetterParams) => {
       if (params.row.hist.confirmed !== undefined) {
-        return params.row.hist.confirmed;
+        return params.row.stats.confirmed -  params.row.hist.confirmed;
       } else {
         return null;
       }
@@ -468,7 +468,7 @@ export const countyCols: GridColDef[] = [
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
       if (params.row.hist.deaths !== undefined) {
-        return params.row.hist.deaths;
+        return params.row.stats.deaths - params.row.hist.deaths;
       } else {
         return null;
       }

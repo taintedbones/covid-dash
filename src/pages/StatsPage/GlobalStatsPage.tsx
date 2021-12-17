@@ -118,7 +118,7 @@ function GlobalStatsPage() {
               deaths:
                 hist?.timeline.deaths[Object.keys(hist?.timeline.deaths)[0]],
               recovered:
-                hist?.timeline.recovered[
+                hist?.timeline.recovered[ 
                   Object.keys(hist?.timeline.recovered)[0]
                 ],
             },

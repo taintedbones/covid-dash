@@ -20,6 +20,7 @@ function GlobalMapPage() {
   const [title, setTitle] = useState<string>("Confirmed Cases");
   const [data, setData] = useState<CountryMapItem[]>([]);
   const [totals, setTotals] = useState<DataTotal>();
+  const [mapDomain, setMapDomain] = useState<number[]>([0,1000000]);
 
   const columns = [
     {
@@ -46,6 +47,16 @@ function GlobalMapPage() {
     },
   ];
 
+  const getMax = (arr) => {
+    let max = 0;
+    for(let i = 0; i < arr.length; i++) {
+      if (arr[i].value > max) {
+        max = arr[i].value;
+      }
+    }
+    return max;
+  }
+
   useEffect(() => {
     const fetchCountries = async () => {
       setLoading(true);
@@ -58,16 +69,18 @@ function GlobalMapPage() {
         }));
 
         setCountries(countryList);
-        setData(
-          countryList.map((country: Country) => ({
-            id: country.countryInfo.iso3
-              ? country.countryInfo.iso3
-              : country.country,
-            value: country.cases,
-            country: country.country,
-            flag: country.countryInfo.flag,
-          }))
-        );
+
+        const tempCountries = countryList.map((country: Country) => ({
+          id: country.countryInfo.iso3
+            ? country.countryInfo.iso3
+            : country.country,
+          value: country.cases,
+          country: country.country,
+          flag: country.countryInfo.flag,
+        }));
+
+        setMapDomain([0, getMax(tempCountries)]);
+        setData(tempCountries);
         setConfirmedCases(
           countryList.map((country: Country) => ({
             id: country.countryInfo.iso3
@@ -133,6 +146,7 @@ function GlobalMapPage() {
     if (countries.length === 0) {
       fetchCountries();
     }
+
     if (!totals) {
       fetchTotals();
     }
@@ -142,26 +156,25 @@ function GlobalMapPage() {
     if (view === "cases") {
       setTitle("Confirmed Cases");
       setData(confirmedCases);
+      setMapDomain([0, getMax(confirmedCases)]);
     } else if (view === "active") {
       setTitle("Active Cases");
       setData(activeCases);
+      setMapDomain([0, getMax(activeCases)]);
     } else if (view === "recovered") {
       setTitle("Recovered Cases");
       setData(recoveredCases);
+      setMapDomain([0, getMax(recoveredCases)]);
     } else if (view === "deaths") {
       setTitle("Deaths");
       setData(deathsCases);
+      setMapDomain([0, getMax(deathsCases)]);
     }
   }, [view]);
 
   return (
     <div>
       <Grid container>
-        {/* <Grid item xs={12}>
-          <Typography variant="h3" gutterBottom>
-            Global Data Map
-          </Typography>
-        </Grid> */}
         <Grid item>
           <MapPage
             totals={totals}
@@ -180,13 +193,10 @@ function GlobalMapPage() {
               features: feats.features,
               label: "properties.name",
               colors: "YlOrRd",
-              // borderColor: "#000000"
+              domain: mapDomain
             }}
           />
         </Grid>
-        {/* <Grid item container xs={12} spacing={2}>
-          <GlobalDataGraphs />
-        </Grid> */}
       </Grid>
     </div>
   );

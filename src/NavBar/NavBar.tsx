@@ -23,6 +23,12 @@ function NavBar() {
   const openGlobalMenu = Boolean(globalMenuAnchor);
   const openVaxMenu = Boolean(vaxMenuAnchor);
 
+  const styles = {
+    link: {
+      textDecoration: "none",
+    },
+  }
+
   const handleUSClose = () => {
     setUsMenuAnchor(null);
   };
@@ -37,7 +43,7 @@ function NavBar() {
     <div>
       <AppBar position="fixed">
         <Toolbar style={{ justifyContent: "space-between", alignItems: "center" }} variant="dense">
-          <Link to="/">
+          <Link to="/" style={styles.link}>
             <Button
               variant="text"
               sx={{ marginRight: "50px", paddingTop: "10px" }}
@@ -72,7 +78,7 @@ function NavBar() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <Link to="/map/us">
+              <Link to="/map/us" style={styles.link}>
                 <MenuItem
                   onClick={() => {
                     setTitle("US Map");
@@ -84,7 +90,7 @@ function NavBar() {
                 </MenuItem>
               </Link>
               <Divider />
-              <Link to="/statistics/us">
+              <Link to="/statistics/us" style={styles.link}>
                 <MenuItem
                   onClick={() => {
                     setTitle("US Statistics");
@@ -114,7 +120,7 @@ function NavBar() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <Link to="/map">
+              <Link to="/map" style={styles.link}>
                 <MenuItem
                   onClick={() => {
                     setTitle("Global Map");
@@ -126,7 +132,7 @@ function NavBar() {
                 </MenuItem>
               </Link>
               <Divider />
-              <Link to="/statistics">
+              <Link to="/statistics" style={styles.link}>
                 <MenuItem
                   onClick={() => {
                     setTitle("Global Statistics");
@@ -155,7 +161,7 @@ function NavBar() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <Link to="/vaccines/us">
+              <Link to="/vaccines/us" style={styles.link}>
                 <MenuItem
                   onClick={() => {
                     setTitle("US Vaccines");
@@ -167,7 +173,7 @@ function NavBar() {
                 </MenuItem>
               </Link>
               <Divider />
-              <Link to="/vaccines">
+              <Link to="/vaccines" style={styles.link}>
                 <MenuItem
                   onClick={() => {
                     setTitle("Global Vaccines");

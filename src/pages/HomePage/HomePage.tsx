@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Grid,
-  Typography,
-  Button,
-  Link,
-  Divider,
-} from "@mui/material";
+import { Grid, Typography, Button, Link, Divider } from "@mui/material";
 import { DataTotal } from "../../scripts/DataInterfaces";
 import TotalCard from "../MapPage/components/TotalCard";
 import { MdOutlineCoronavirus } from "react-icons/md";
@@ -90,6 +84,13 @@ function HomePage() {
             color="lightgreen"
             gridWidth={4}
           />
+          {totals && (
+            <Grid item xs={12}>
+              <Typography>
+                Updated: {new Date(totals?.updated).toUTCString()}
+              </Typography>
+            </Grid>
+          )}
         </Grid>
         <Grid item container xs={12} spacing={4}>
           <Grid item container xs={6} spacing={2} justifyContent="center">
