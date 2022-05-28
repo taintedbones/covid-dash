@@ -32,7 +32,8 @@ function GlobalStatsPage() {
   const [provinceList, setProvinceList] = useState<CountryJH[]>([]);
   const [countryName, setCountryName] = useState<string>("World");
   const [country, setCountry] = useState<Country | undefined>(undefined);
-  const [data, setData] = useState<Country[] | CountryJH[]>([]);
+  // const [data, setData] = useState<Country[] | CountryJH[]>([]);
+  const [data, setData] = useState<any>([]);
   const [cols, setCols] = useState<any>(countryTotalCols);
   const [filterModel, setFilterModel] = useState<any>({ items: [] });
   const [countryNames, setCountryNames] = useState<string[]>([]);
@@ -270,8 +271,8 @@ function GlobalStatsPage() {
         </Grid>
         <Grid item xs={12}>
           <DataGrid
-            rows={data}
             columns={cols}
+            rows={data} 
             loading={loading}
             style={styling.dataGrid}
             sortModel={sortModel}
