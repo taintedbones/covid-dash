@@ -26,7 +26,7 @@ function VaccinesPage({
         </Grid>
         <Grid item container xs={12} spacing={2}>
           {totals && (
-            <Grid item container xs={3} spacing={2} sx={{ height: "170px" }}>
+            <Grid item container xs={12} md={3} spacing={2} sx={{ height: "170px" }}>
               <TotalCard
                 title="Total Administered"
                 value={totals.total}
@@ -53,11 +53,11 @@ function VaccinesPage({
               />
             </Grid>
           )}
-          <Grid item container xs={9}>
+          <Grid item container xs={12} md={9}>
             <MapChart data={mapData} mapConfig={mapConfig} />
           </Grid>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={12} md={7}>
           <DataGrid
             rows={tableData}
             columns={tableCols}
@@ -75,7 +75,7 @@ function VaccinesPage({
             }}
           />
         </Grid>
-        <Grid item container xs={5}>
+        <Grid item container xs={12} md={5}>
           <LineGraph
             title="Total Administered"
             data={timeline}
