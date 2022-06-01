@@ -29,7 +29,8 @@ function USStatsPage() {
   const [countyList, setCountyList] = useState<County[]>([]);
   const [stateName, setStateName] = useState<string>("All");
   const [state, setState] = useState<State>();
-  const [data, setData] = useState<State[] | County[]>([]);
+  // const [data, setData] = useState<State[] | County[]>([]);
+  const [data, setData] = useState<any>([]);
   const [cols, setCols] = useState<any>(stateTotalCols);
   const [stateNames, setStateNames] = useState<string[]>([]);
   const [filterModel, setFilterModel] = useState<any>({
@@ -48,7 +49,6 @@ function USStatsPage() {
 
   useEffect(() => {
     const fetchState = async () => {
-      setLoading(true);
       try {
         const r = await axios.get(
           "https://disease.sh/v3/covid-19/states?sort=cases&allowNull=true"
@@ -68,7 +68,6 @@ function USStatsPage() {
         setLoading(false);
       } catch (error) {
         console.error(error);
-        setLoading(false);
       }
     };
 
@@ -102,7 +101,6 @@ function USStatsPage() {
     };
 
     const fetchCounties = async () => {
-      setLoading(true);
       try {
         const r = await axios.get(
           "https://disease.sh/v3/covid-19/jhucsse/counties"
@@ -127,16 +125,16 @@ function USStatsPage() {
 
         setStateNames(names);
         setCountyList(counties);
-        setLoading(false);
       } catch (error) {
         console.error(error);
-        setLoading(false);
       }
     };
 
     if (stateList.length === 0) {
+      setLoading(true);
       fetchState();
       fetchCounties();
+      setLoading(false);
     }
   }, []);
 
@@ -230,7 +228,7 @@ function USStatsPage() {
     <div>
       <Grid container spacing={2}>
         <Grid item container spacing={2} xs={12} justifyContent="space-between">
-          <Grid item container xs={4}>
+          <Grid item container xs={12} md={4}>
             <TableHeader
               setShowPop={setDataPerPop}
               disabled={disableDataSelect}
@@ -251,8 +249,8 @@ function USStatsPage() {
             </Select>
           </Grid>
           {state && (
-            <Grid item container xs={8} spacing={2} justifyContent="flex-end">
-              <Grid item xs={3} style={{ height: "auto" }}>
+            <Grid item container xs={12} md={8} spacing={2} justifyContent="flex-end">
+              <Grid item xs={12} md={3} style={{ height: "auto" }}>
                 <Paper
                   style={styling.paper}
                   sx={{

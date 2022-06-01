@@ -36,13 +36,13 @@ function HomePage() {
       <Grid container spacing={5}>
         <Grid item container xs={12}>
           <Grid item xs={12}>
-            <Typography variant="h1" sx={{ display: "inline-flex" }}>
+            <Typography variant="h1" sx={{ display: "inline-flex", fontSize: "8vw" }}>
               C<MdOutlineCoronavirus className="App-logo" />
               VID-19 Dashboard
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h4">
+            <Typography variant="h4" sx={{fontSize: "4vw"}}>
               Track the current pandemic with live data
             </Typography>
           </Grid>
@@ -93,7 +93,7 @@ function HomePage() {
           )}
         </Grid>
         <Grid item container xs={12} spacing={4} alignItems="flex-start">
-          <Grid item container xs={6} spacing={2} justifyContent="center">
+          <Grid item container xs={12} md={6} spacing={2} justifyContent="center">
             <Grid item xs={12}>
               <Typography variant="h4">
                 COVID-19 Resources
@@ -124,7 +124,7 @@ function HomePage() {
               )}
             </Grid>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h4" gutterBottom>
               Data Resources
             </Typography>

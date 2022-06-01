@@ -31,7 +31,7 @@ export function TableHeader({ setShowPop, disabled }) {
   const [view, setView] = useState<any>("total");
   return (
     <Box
-      sx={{
+      sx={{ 
         display: "flex",
         justifyContent: "flex-end",
         alignItems: "center",

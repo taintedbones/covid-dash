@@ -32,7 +32,8 @@ function GlobalStatsPage() {
   const [provinceList, setProvinceList] = useState<CountryJH[]>([]);
   const [countryName, setCountryName] = useState<string>("World");
   const [country, setCountry] = useState<Country | undefined>(undefined);
-  const [data, setData] = useState<Country[] | CountryJH[]>([]);
+  // const [data, setData] = useState<Country[] | CountryJH[]>([]);
+  const [data, setData] = useState<any>([]);
   const [cols, setCols] = useState<any>(countryTotalCols);
   const [filterModel, setFilterModel] = useState<any>({ items: [] });
   const [countryNames, setCountryNames] = useState<string[]>([]);
@@ -215,7 +216,7 @@ function GlobalStatsPage() {
     <div>
       <Grid container spacing={2}>
         <Grid item container spacing={2} xs={12} justifyContent="space-between">
-          <Grid item container xs={4}>
+          <Grid item container xs={12} md={4}>
             {/* <Typography variant="h4">Global Statistics</Typography> */}
             <TableHeader
               setShowPop={setDataPerPop}
@@ -237,8 +238,8 @@ function GlobalStatsPage() {
             </Select>
           </Grid>
           {country && (
-            <Grid item container xs={8} spacing={2} justifyContent="flex-end">
-              <Grid item xs={3} style={{ height: "120px" }}>
+            <Grid item container xs={12} md={8} spacing={2} justifyContent="flex-end">
+              <Grid item xs={12} md={3} style={{ height: "120px" }}>
                 <Paper style={styling.paper}>
                   <img
                     src={country?.countryInfo.flag}
@@ -270,8 +271,8 @@ function GlobalStatsPage() {
         </Grid>
         <Grid item xs={12}>
           <DataGrid
-            rows={data}
             columns={cols}
+            rows={data} 
             loading={loading}
             style={styling.dataGrid}
             sortModel={sortModel}

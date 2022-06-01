@@ -5,7 +5,7 @@ import { Grid, Paper, Typography } from "@mui/material";
 function TotalCard({ title, value, color, gridWidth }) {
   return (
     <React.Fragment>
-      <Grid item container xs={gridWidth}>
+      <Grid item container xs={12} md={gridWidth}>
         <Paper sx={{ padding: "5px", height: "100%", width: "100%" }}>
           <Grid item container xs={12} alignItems="center" sx={{height: "100px"}}>
             <Grid item xs={12}>

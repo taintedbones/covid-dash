@@ -22,6 +22,7 @@ const renderHistCell = (params) => {
   }
 };
 
+// used on global stats page
 export const countryPopCols: GridColDef[] = [
   {
     field: "flag",
@@ -40,11 +41,13 @@ export const countryPopCols: GridColDef[] = [
       );
     },
     sortable: false,
+    minWidth: 50
   },
   {
     field: "country",
     headerName: "Country",
     flex: 1,
+    minWidth: 150
   },
   {
     field: "cases",
@@ -52,6 +55,7 @@ export const countryPopCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.casesPerOneMillion,
+    minWidth: 100
   },
   {
     field: "casesHist",
@@ -61,6 +65,7 @@ export const countryPopCols: GridColDef[] = [
       params.row.casesPerOneMillion - params.row.twoDayHist.casesPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "deaths",
@@ -68,6 +73,7 @@ export const countryPopCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.deathsPerOneMillion,
+    minWidth: 100
   },
   {
     field: "deathsHist",
@@ -78,6 +84,7 @@ export const countryPopCols: GridColDef[] = [
       params.row.twoDayHist.deathsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "tests",
@@ -85,6 +92,7 @@ export const countryPopCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.testsPerOneMillion,
+    minWidth: 100
   },
   {
     field: "testHist",
@@ -94,15 +102,18 @@ export const countryPopCols: GridColDef[] = [
       params.row.testsPerOneMillion - params.row.twoDayHist.testsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "updated",
     headerName: "Last Updated",
     flex: 1.5,
     valueGetter: (params) => new Date(params.value).toLocaleString(),
+    minWidth: 200
   },
 ];
 
+// used on global stats page
 export const countryTotalCols: GridColDef[] = [
   {
     field: "flag",
@@ -121,17 +132,20 @@ export const countryTotalCols: GridColDef[] = [
       );
     },
     sortable: false,
+    minWidth: 50
   },
   {
     field: "country",
     headerName: "Country",
     flex: 1,
+    minWidth: 150
   },
   {
     field: "active",
     headerName: "Active",
     flex: 1,
     type: "number",
+    minWidth: 100
   },
   {
     field: "activeHist",
@@ -140,12 +154,14 @@ export const countryTotalCols: GridColDef[] = [
     valueGetter: (params) => params.row.active - params.row.twoDayHist.active,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "cases",
     headerName: "Confirmed",
     flex: 1,
     type: "number",
+    minWidth: 100
   },
   {
     field: "casesHist",
@@ -154,12 +170,14 @@ export const countryTotalCols: GridColDef[] = [
     valueGetter: (params) => params.row.cases - params.row.twoDayHist.cases,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "recovered",
     headerName: "Recovered",
     flex: 1,
     type: "number",
+    minWidth: 100
   },
   {
     field: "recoveredHist",
@@ -169,12 +187,14 @@ export const countryTotalCols: GridColDef[] = [
       params.row.recovered - params.row.twoDayHist.recovered,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "deaths",
     headerName: "Deaths",
     flex: 1,
     type: "number",
+    minWidth: 100
   },
   {
     field: "deathsHist",
@@ -183,15 +203,18 @@ export const countryTotalCols: GridColDef[] = [
     valueGetter: (params) => params.row.deaths - params.row.twoDayHist.deaths,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "updated",
     headerName: "Last Updated",
     flex: 1.5,
     valueGetter: (params) => new Date(params.value).toLocaleString(),
+    minWidth: 200
   },
 ];
 
+// used on global stats page
 export const provinceCols: GridColDef[] = [
   {
     field: "country",
@@ -203,6 +226,7 @@ export const provinceCols: GridColDef[] = [
     field: "province",
     headerName: "Province",
     flex: 1,
+    minWidth: 150
   },
   {
     field: "cases",
@@ -210,6 +234,7 @@ export const provinceCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.stats.confirmed,
+    minWidth: 100
   },
   {
     field: "casesHist",
@@ -222,6 +247,7 @@ export const provinceCols: GridColDef[] = [
     },
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "deaths",
@@ -229,6 +255,7 @@ export const provinceCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.stats.deaths,
+    minWidth: 100
   },
   {
     field: "deathsHist",
@@ -241,6 +268,7 @@ export const provinceCols: GridColDef[] = [
     },
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "recovered",
@@ -248,6 +276,7 @@ export const provinceCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.stats.recovered,
+    minWidth: 100
   },
   {
     field: "recoveredHist",
@@ -260,15 +289,18 @@ export const provinceCols: GridColDef[] = [
     },
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "updatedAt",
     headerName: "Confirmed",
     flex: 1,
     type: "Date",
+    minWidth: 200
   },
 ];
 
+// Used on US Stats Page
 export const stateTotalCols: GridColDef[] = [
   {
     field: "flag",
@@ -280,17 +312,20 @@ export const stateTotalCols: GridColDef[] = [
     renderCell: (params) => {
       return <img src={params.row.flag} alt="" style={{ height: "20px" }} />;
     },
+    minWidth: 50
   },
   {
     field: "state",
     headerName: "State",
-    flex: 1,
+    flex: 1.5,
+    minWidth: 150
   },
   {
     field: "active",
     headerName: "Active",
     flex: 1,
     type: "number",
+    minWidth: 100
   },
   {
     field: "activeHist",
@@ -299,12 +334,14 @@ export const stateTotalCols: GridColDef[] = [
     valueGetter: (params) => params.row.active - params.row.hist.active,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "cases",
     headerName: "Cases",
     flex: 1,
     type: "number",
+    minWidth: 100
   },
   {
     field: "casesHist",
@@ -313,12 +350,14 @@ export const stateTotalCols: GridColDef[] = [
     valueGetter: (params) => params.row.cases - params.row.hist.cases,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "recovered",
     headerName: "Recovered",
     flex: 1,
     type: "number",
+    minWidth: 100
   },
   {
     field: "recoveredHist",
@@ -327,12 +366,14 @@ export const stateTotalCols: GridColDef[] = [
     valueGetter: (params) => params.row.recovered - params.row.hist.recovered,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "deaths",
     headerName: "Deaths",
     flex: 1,
     type: "number",
+    minWidth: 100
   },
   {
     field: "deathsHist",
@@ -341,15 +382,18 @@ export const stateTotalCols: GridColDef[] = [
     valueGetter: (params) => params.row.deaths - params.row.hist.deaths,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "updated",
     headerName: "Last Updated",
     flex: 1.5,
     valueGetter: (params) => new Date(params.value).toLocaleString(),
+    minWidth: 200
   },
 ];
 
+// Used on US Stats page
 export const statePopCols: GridColDef[] = [
   {
     field: "flag",
@@ -361,11 +405,13 @@ export const statePopCols: GridColDef[] = [
     renderCell: (params) => {
       return <img src={params.row.flag} alt="" style={{ height: "20px" }} />;
     },
+    minWidth: 50
   },
   {
     field: "state",
     headerName: "State",
     flex: 1,
+    minWidth: 150
   },
   {
     field: "cases",
@@ -373,6 +419,7 @@ export const statePopCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.casesPerOneMillion,
+    minWidth: 100
   },
   {
     field: "casesHist",
@@ -382,6 +429,7 @@ export const statePopCols: GridColDef[] = [
       params.row.casesPerOneMillion - params.row.hist.casesPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "deaths",
@@ -389,6 +437,7 @@ export const statePopCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.deathsPerOneMillion,
+    minWidth: 100
   },
   {
     field: "deathsHist",
@@ -398,6 +447,7 @@ export const statePopCols: GridColDef[] = [
       params.row.deathsPerOneMillion - params.row.hist.deathsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "tests",
@@ -405,6 +455,7 @@ export const statePopCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params) => params.row.testsPerOneMillion,
+    minWidth: 100
   },
   {
     field: "testsHist",
@@ -414,15 +465,18 @@ export const statePopCols: GridColDef[] = [
       params.row.testsPerOneMillion - params.row.hist.testsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
+    minWidth: 100
   },
   {
     field: "updated",
     headerName: "Last Updated",
     flex: 1.5,
     valueGetter: (params) => new Date(params.value).toLocaleString(),
+    minWidth: 200
   },
 ];
 
+// Used on US Stats page
 export const countyCols: GridColDef[] = [
   {
     field: "province",
@@ -433,6 +487,7 @@ export const countyCols: GridColDef[] = [
     field: "county",
     headerName: "County",
     flex: 1,
+    minWidth: 150
   },
   {
     field: "cases",
@@ -440,6 +495,7 @@ export const countyCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params: GridValueGetterParams) => params.row.stats.confirmed,
+    minWidth: 100
   },
   {
     field: "casesHist",
@@ -453,7 +509,8 @@ export const countyCols: GridColDef[] = [
         return null;
       }
     },
-    renderCell: renderHistCell
+    renderCell: renderHistCell,
+    minWidth: 100
   },
   {
     field: "deaths",
@@ -461,6 +518,7 @@ export const countyCols: GridColDef[] = [
     flex: 1,
     type: "number",
     valueGetter: (params: GridValueGetterParams) => params.row.stats.deaths,
+    minWidth: 100
   },
   {
     field: "deathsHist",
@@ -473,11 +531,13 @@ export const countyCols: GridColDef[] = [
         return null;
       }
     },
-    renderCell: renderHistCell
+    renderCell: renderHistCell,
+    minWidth: 100
   },
   {
     field: "updatedAt",
     headerName: "Last Updated",
     flex: 1,
+    minWidth: 200
   },
 ];
