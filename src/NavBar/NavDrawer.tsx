@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, Drawer, Divider, List, ListItem, ListItemText } from "@mui/material";
+import {
+  Button,
+  Drawer,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
@@ -9,7 +16,8 @@ const styles = {
     color: "white",
   },
   button: {
-    // width: "100%",
+  },
+  drawer: {
   },
 };
 
@@ -34,8 +42,15 @@ function NavDrawer() {
 
   return (
     <React.Fragment>
-      <Button onClick={toggleDrawer}><Menu /></Button>
-      <Drawer anchor="right" open={open} onClose={toggleDrawer}>
+      <Button onClick={toggleDrawer} sx={styles.button}>
+        <Menu />
+      </Button>
+      <Drawer
+        anchor="right"
+        open={open}
+        onClose={toggleDrawer}
+        sx={styles.drawer}
+      >
         <List>
           {links.map((item) => (
             <Link to={item.url} style={styles.link}>

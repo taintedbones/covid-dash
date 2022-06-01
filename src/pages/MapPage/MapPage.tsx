@@ -63,7 +63,7 @@ function MapPage({
             />
           </Grid>
         )}
-        <Grid item xs={9}>
+        <Grid item xs={12} md={9}>
           <ToggleButtonGroup
             value={view}
             exclusive
@@ -76,11 +76,11 @@ function MapPage({
           </ToggleButtonGroup>
         </Grid>
         {totals && (
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             Updated: {new Date(totals.updated).toUTCString()}
           </Grid>
         )}
-        <Grid item container xs={3} style={{ height: "680px" }}>
+        <Grid item container xs={12} md={3} style={{ height: "680px" }}>
           <Paper style={{ width: "100%", height: "100%" }}>
             <Grid item xs={12}>
               <Typography variant="h5" align="center">
@@ -92,7 +92,7 @@ function MapPage({
             </Grid>
           </Paper>
         </Grid>
-        <Grid item container xs={9} spacing={2}>
+        <Grid item container xs={12} md={9} spacing={2}>
           <MapChart data={data} mapConfig={mapConfig} />
         </Grid>
       </Grid>

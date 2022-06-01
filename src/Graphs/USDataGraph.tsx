@@ -38,10 +38,10 @@ function USDataGraph() {
 
   return (
     <React.Fragment>
-      <Grid item container xs={6} justifyContent="center">
+      <Grid item container xs={12} md={6} justifyContent="center">
         <LineGraph title={"Total Cases"} data={cases} />
       </Grid>
-      <Grid item container xs={6} justifyContent="center">
+      <Grid item container xs={12} md={6} justifyContent="center">
         <LineGraph title={"Total Deaths"} data={deaths} />
       </Grid>
     </React.Fragment>

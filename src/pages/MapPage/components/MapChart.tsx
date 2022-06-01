@@ -77,11 +77,11 @@ function MapChart({ data, mapConfig }) {
               alignItems="center"
               justifyContent="space-around"
             >
-              <Grid item container xs={3}>
-                <Grid item xs={3}>
+              <Grid item container xs={12} md={3}>
+                <Grid item xs={12} md={3}>
                   <Typography variant="button">Zoom:</Typography>
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={12} md={9}>
                   <Slider
                     value={projScale}
                     step={10}
@@ -91,11 +91,11 @@ function MapChart({ data, mapConfig }) {
                   />
                 </Grid>
               </Grid>
-              <Grid item container xs={3}>
-                <Grid item xs={3}>
+              <Grid item container xs={12} md={3}>
+                <Grid item xs={12} md={3}>
                   <Typography variant="button">Move X:</Typography>
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={12} md={9}>
                   <Slider
                     value={x}
                     step={0.1}
@@ -106,11 +106,11 @@ function MapChart({ data, mapConfig }) {
                   />
                 </Grid>
               </Grid>
-              <Grid item container xs={3}>
-                <Grid item xs={3}>
+              <Grid item container xs={12} md={3}>
+                <Grid item xs={12} md={3}>
                   <Typography variant="button">Move Y:</Typography>
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={12} md={9}>
                   <Slider
                     value={y}
                     step={0.1}
@@ -120,7 +120,7 @@ function MapChart({ data, mapConfig }) {
                   />
                 </Grid>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={12} md={1}>
                 <Button
                   variant="outlined"
                   onClick={() => {

@@ -228,7 +228,7 @@ function USStatsPage() {
     <div>
       <Grid container spacing={2}>
         <Grid item container spacing={2} xs={12} justifyContent="space-between">
-          <Grid item container xs={4}>
+          <Grid item container xs={12} md={4}>
             <TableHeader
               setShowPop={setDataPerPop}
               disabled={disableDataSelect}
@@ -249,8 +249,8 @@ function USStatsPage() {
             </Select>
           </Grid>
           {state && (
-            <Grid item container xs={8} spacing={2} justifyContent="flex-end">
-              <Grid item xs={3} style={{ height: "auto" }}>
+            <Grid item container xs={12} md={8} spacing={2} justifyContent="flex-end">
+              <Grid item xs={12} md={3} style={{ height: "auto" }}>
                 <Paper
                   style={styling.paper}
                   sx={{

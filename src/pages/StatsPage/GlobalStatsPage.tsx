@@ -216,7 +216,7 @@ function GlobalStatsPage() {
     <div>
       <Grid container spacing={2}>
         <Grid item container spacing={2} xs={12} justifyContent="space-between">
-          <Grid item container xs={4}>
+          <Grid item container xs={12} md={4}>
             {/* <Typography variant="h4">Global Statistics</Typography> */}
             <TableHeader
               setShowPop={setDataPerPop}
@@ -238,8 +238,8 @@ function GlobalStatsPage() {
             </Select>
           </Grid>
           {country && (
-            <Grid item container xs={8} spacing={2} justifyContent="flex-end">
-              <Grid item xs={3} style={{ height: "120px" }}>
+            <Grid item container xs={12} md={8} spacing={2} justifyContent="flex-end">
+              <Grid item xs={12} md={3} style={{ height: "120px" }}>
                 <Paper style={styling.paper}>
                   <img
                     src={country?.countryInfo.flag}
