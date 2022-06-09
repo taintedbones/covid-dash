@@ -7,6 +7,7 @@ import { getUSFlag } from "../../scripts/USFlagMatch";
 import TotalCard from "../MapPage/components/TotalCard";
 import USDataGraph from "../../Graphs/USDataGraph";
 import { TableFooter, TableHeader } from "../../DataTable/DataTable";
+import TotalsTable from "./components/Table";
 import axios from "axios";
 
 const styling = {
@@ -130,7 +131,11 @@ function USStatsPage() {
       }
     };
 
-    if (stateList.length === 0) {
+    // check time to only update table every 10 minutes
+    const time = new Date();
+    // TODO: Figure out a fix for this
+    // currently doesn't update table every 10 minutes
+    if (stateList.length === 0 || time.getMinutes() % 10 === 0) {
       setLoading(true);
       fetchState();
       fetchCounties();
@@ -142,6 +147,7 @@ function USStatsPage() {
     const fetchCountiesHistory = async (stateName) => {
       setLoading(true);
       try {
+        // API only allows getting one state at a time
         const r = await axios.get(
           "https://disease.sh/v3/covid-19/historical/usacounties/" +
             stateName.toLowerCase() +
@@ -178,17 +184,19 @@ function USStatsPage() {
       }
     };
 
+    // TODO: Cases & deaths on state totals not displaying on table when
+    //  switching from specified state back to all
     if (stateName === "All") {
       setState(undefined);
-      setData(stateList);
-      setCols(stateTotalCols);
-      setDataSource({
-        name: "Worldometers",
-        url: "https://www.worldometers.info/coronavirus/",
-      });
-      setFilterModel({
-        items: [],
-      });
+      // setCols(stateTotalCols);
+      // setData(stateList);
+      // setDataSource({
+      //   name: "Worldometers",
+      //   url: "https://www.worldometers.info/coronavirus/",
+      // });
+      // setFilterModel({
+      //   items: [],
+      // });
       setDisableDataSelect(false);
     } else {
       setData([]);
@@ -197,21 +205,21 @@ function USStatsPage() {
       } else {
         setData(countyList);
       }
-      setCols(countyCols);
+      // setCols(countyCols);
       setState(stateList.find((item) => item.state === stateName));
-      setDataSource({
-        name: "John Hopkins University",
-        url: "https://coronavirus.jhu.edu/",
-      });
-      setFilterModel({
-        items: [
-          {
-            columnField: "province",
-            operatorValue: "equals",
-            value: stateName,
-          },
-        ],
-      });
+      // setDataSource({
+      //   name: "John Hopkins University",
+      //   url: "https://coronavirus.jhu.edu/",
+      // });
+      // setFilterModel({
+      //   items: [
+      //     {
+      //       columnField: "province",
+      //       operatorValue: "equals",
+      //       value: stateName,
+      //     },
+      //   ],
+      // });
       setDisableDataSelect(true);
     }
   }, [stateName]);
@@ -249,7 +257,14 @@ function USStatsPage() {
             </Select>
           </Grid>
           {state && (
-            <Grid item container xs={12} md={8} spacing={2} justifyContent="flex-end">
+            <Grid
+              item
+              container
+              xs={12}
+              md={8}
+              spacing={2}
+              justifyContent="flex-end"
+            >
               <Grid item xs={12} md={3} style={{ height: "auto" }}>
                 <Paper
                   style={styling.paper}
@@ -284,24 +299,39 @@ function USStatsPage() {
           )}
         </Grid>
         <Grid item xs={12}>
-          <DataGrid
-            rows={data}
-            columns={cols}
-            loading={loading}
-            style={styling.dataGrid}
-            sortModel={sortModel}
-            onSortModelChange={(model) => setSortModel(model)}
-            filterModel={filterModel}
-            components={{
-              Footer: TableFooter,
-            }}
-            componentsProps={{
-              footer: {
-                sourceName: dataSource.name,
-                sourceUrl: dataSource.url,
-              },
-            }}
-          />
+          {stateName === "All" ? (
+            <TotalsTable
+              data={stateList}
+              cols={stateTotalCols}
+              loading={loading}
+              sortModel={[{ field: "cases", sort: "desc" }]}
+              filterModel={{ items: [] }}
+              source={{
+                name: "Worldometers",
+                url: "https://www.worldometers.info/coronavirus/",
+              }}
+            />
+          ) : (
+            <TotalsTable
+              data={countyList}
+              cols={countyCols}
+              loading={loading}
+              sortModel={[{ field: "cases", sort: "desc" }]}
+              filterModel={{
+                items: [
+                  {
+                    columnField: "province",
+                    operatorValue: "equals",
+                    value: stateName,
+                  },
+                ],
+              }}
+              source={{
+                name: "John Hopkins University",
+                url: "https://coronavirus.jhu.edu/",
+              }}
+            />
+          )}
         </Grid>
         {stateName === "All" && <USDataGraph />}
       </Grid>
