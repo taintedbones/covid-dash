@@ -426,7 +426,7 @@ export const statePopCols: GridColDef[] = [
     headerName: "Confirmed (1 Day)",
     flex: 1,
     valueGetter: (params) =>
-      params.row.casesPerOneMillion - params.row.hist.casesPerOneMillion,
+      params.row.casesPerOneMillion - params.row.hist?.casesPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
     minWidth: 100
@@ -444,7 +444,7 @@ export const statePopCols: GridColDef[] = [
     headerName: "Deaths (1 Day)",
     flex: 1,
     valueGetter: (params) =>
-      params.row.deathsPerOneMillion - params.row.hist.deathsPerOneMillion,
+      params.row.deathsPerOneMillion - params.row.hist?.deathsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
     minWidth: 100
@@ -462,7 +462,7 @@ export const statePopCols: GridColDef[] = [
     headerName: "Tests (1 Day)",
     flex: 1,
     valueGetter: (params) =>
-      params.row.testsPerOneMillion - params.row.hist.testsPerOneMillion,
+      params.row.testsPerOneMillion - params.row.hist?.testsPerOneMillion,
     renderCell: renderHistCell,
     sortable: false,
     minWidth: 100
@@ -494,7 +494,7 @@ export const countyCols: GridColDef[] = [
     headerName: "Cases",
     flex: 1,
     type: "number",
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.confirmed,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats?.confirmed,
     minWidth: 100
   },
   {
@@ -517,7 +517,7 @@ export const countyCols: GridColDef[] = [
     headerName: "Deaths",
     flex: 1,
     type: "number",
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.deaths,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats?.deaths,
     minWidth: 100
   },
   {
