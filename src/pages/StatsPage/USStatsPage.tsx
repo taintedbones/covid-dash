@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Grid, MenuItem, Select, Paper } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { State, County } from "../../scripts/DataInterfaces";
 import { stateTotalCols, statePopCols, countyCols } from "./StatsCols";
 import { getUSFlag } from "../../scripts/USFlagMatch";
 import TotalCard from "../MapPage/components/TotalCard";
 import USDataGraph from "../../Graphs/USDataGraph";
-import { TableFooter, TableHeader } from "../../DataTable/DataTable";
+import { TableHeader } from "../../DataTable/DataTable";
 import TotalsTable from "./components/Table";
 import axios from "axios";
 
@@ -30,21 +29,8 @@ function USStatsPage() {
   const [countyList, setCountyList] = useState<County[]>([]);
   const [stateName, setStateName] = useState<string>("All");
   const [state, setState] = useState<State>();
-  // const [data, setData] = useState<State[] | County[]>([]);
-  const [data, setData] = useState<any>([]);
-  const [cols, setCols] = useState<any>(stateTotalCols);
   const [stateNames, setStateNames] = useState<string[]>([]);
-  const [filterModel, setFilterModel] = useState<any>({
-    items: [],
-  });
-  const [sortModel, setSortModel] = useState<any>([
-    { field: "cases", sort: "desc" },
-  ]);
   const [dataPerPop, setDataPerPop] = useState<boolean>(false);
-  const [dataSource, setDataSource] = useState<any>({
-    name: "Worldometers",
-    url: "https://www.worldometers.info/coronavirus/",
-  });
   const [disableDataSelect, setDisableDataSelect] = useState<boolean>(false);
   const [cntysFetched, setCntysFetched] = useState<string[]>([]);
 
@@ -94,7 +80,6 @@ function USStatsPage() {
             },
           };
         });
-        setData(temp);
         setStateList(temp);
       } catch (err) {
         console.error(err);
@@ -177,7 +162,6 @@ function USStatsPage() {
 
         setCntysFetched(ctyFetchList);
         setCountyList(temp);
-        setData(temp);
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -188,49 +172,26 @@ function USStatsPage() {
     //  switching from specified state back to all
     if (stateName === "All") {
       setState(undefined);
-      // setCols(stateTotalCols);
-      // setData(stateList);
-      // setDataSource({
-      //   name: "Worldometers",
-      //   url: "https://www.worldometers.info/coronavirus/",
-      // });
-      // setFilterModel({
-      //   items: [],
-      // });
       setDisableDataSelect(false);
     } else {
-      setData([]);
       if (!cntysFetched.find((i) => i === stateName)) {
         fetchCountiesHistory(stateName);
-      } else {
-        setData(countyList);
-      }
-      // setCols(countyCols);
+      } 
+      // else {
+      //   setData(countyList);
+      // }
       setState(stateList.find((item) => item.state === stateName));
-      // setDataSource({
-      //   name: "John Hopkins University",
-      //   url: "https://coronavirus.jhu.edu/",
-      // });
-      // setFilterModel({
-      //   items: [
-      //     {
-      //       columnField: "province",
-      //       operatorValue: "equals",
-      //       value: stateName,
-      //     },
-      //   ],
-      // });
       setDisableDataSelect(true);
     }
   }, [stateName]);
 
-  useEffect(() => {
-    if (dataPerPop) {
-      setCols(statePopCols);
-    } else {
-      setCols(stateTotalCols);
-    }
-  }, [dataPerPop]);
+  // useEffect(() => {
+  //   if (dataPerPop) {
+  //     setCols(statePopCols);
+  //   } else {
+  //     setCols(stateTotalCols);
+  //   }
+  // }, [dataPerPop]);
 
   return (
     <div>
