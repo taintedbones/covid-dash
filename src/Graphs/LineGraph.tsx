@@ -19,9 +19,9 @@ function LineGraph({ title, data }) {
               min: "auto",
               max: "auto",
               stacked: true,
-              reverse: false,
+              // reverse: false,
             }}
-            yFormat=">-.3s"
+            // yFormat=">-.3s"
             curve="natural"
             axisTop={null}
             axisRight={null}
@@ -41,15 +41,15 @@ function LineGraph({ title, data }) {
               legendOffset: -75,
               legendPosition: "middle",
             }}
-            pointSize={7}
-            pointColor={{ theme: "grid.line.stroke" }}
-            colors={{ scheme: "accent" }}
+            // pointSize={7}
+            // pointColor={{ theme: "grid.line.stroke" }}
+            colors="accent"
             lineWidth={6}
-            theme={{ textColor: "white" }}
-            pointBorderWidth={2}
-            pointBorderColor={{ from: "serieColor" }}
-            pointLabelYOffset={-12}
-            useMesh={true}
+            // theme={{ textColor: "white" }}
+            // pointBorderWidth={2}
+            // pointBorderColor={{ from: "serieColor" }}
+            // pointLabelYOffset={-12}
+            // useMesh={true}
             legends={[
               {
                 anchor: "top-right",
@@ -64,7 +64,7 @@ function LineGraph({ title, data }) {
                 itemOpacity: 0.75,
                 symbolSize: 12,
                 symbolShape: "circle",
-                symbolBorderColor: "rgba(0, 0, 0, .5)",
+                // symbolBorderColor: "rgba(0, 0, 0, .5)",
                 effects: [
                   {
                     on: "hover",
