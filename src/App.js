@@ -8,8 +8,19 @@ import GlobalVaccinesPage from "./pages/VaccinePage/GlobalVaccinesPage";
 import USVaccinesPage from "./pages/VaccinePage/USVaccinesPage";
 import NavBar from "./NavBar/NavBar";
 import AppFooter from "./NavBar/AppFooter";
-import { HashRouter, BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import {
+  HashRouter,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import {
+  createTheme,
+  ThemeProvider,
+  CssBaseline,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import "@fontsource/roboto/400.css";
 
 function App() {
@@ -24,7 +35,23 @@ function App() {
       <CssBaseline />
       <HashRouter basename="/">
         <NavBar />
-        <div style={{ padding: "80px 40px" }}>
+        <div style={{ padding: "70px 40px" }}>
+          <Alert
+            severity="warning"
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              width: "100%",
+              marginBottom: "20px",
+            }}
+          >
+            <AlertTitle>Warning: Data may be missing or innacurate</AlertTitle>
+            This website was created during the peak of the COVID-19 pandemic.
+            Since that peak has passed and the world has a better understanding
+            of the virus, fewer sources are tracking the data used for this
+            website. As a result, some of the data listed may be innacurate,
+            lacking, or missing entirely.
+          </Alert>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/statistics" element={<GlobalStatsPage />} />
