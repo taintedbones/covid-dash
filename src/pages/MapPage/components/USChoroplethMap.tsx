@@ -12,7 +12,7 @@ function USChoroplethMap() {
         features={feats.features}
         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
         colors="YlOrRd"
-        // domain={[0, 1000000]}
+        domain={[0, 1000000]}
         unknownColor="#101b42"
         label="properties.state_name"
         valueFormat=".2s"
@@ -23,24 +23,24 @@ function USChoroplethMap() {
         graticuleLineColor="rgba(0, 0, 0, .2)"
         borderWidth={0.5}
         borderColor="#101b42"
-        // legends={[
-        //   {
-        //     anchor: "bottom-left",
-        //     direction: "column",
-        //     justify: true,
-        //     translateX: 20,
-        //     translateY: -60,
-        //     itemsSpacing: 0,
-        //     itemWidth: 92,
-        //     itemHeight: 18,
-        //     itemDirection: "left-to-right",
-        //     itemOpacity: 0.85,
-        //     symbolSize: 18,
-        //   },
-        // ]}
+        legends={[
+          {
+            anchor: "bottom-left",
+            direction: "column",
+            justify: true,
+            translateX: 20,
+            translateY: -60,
+            itemsSpacing: 0,
+            itemWidth: 92,
+            itemHeight: 18,
+            itemDirection: "left-to-right",
+            itemOpacity: 0.85,
+            symbolSize: 18,
+          },
+        ]}
         theme={{
-          "background": "transparent",
-          // "textColor": "#ffffff",
+          background: "transparent",
+          textColor: "white",
         }}
       />
     </div>

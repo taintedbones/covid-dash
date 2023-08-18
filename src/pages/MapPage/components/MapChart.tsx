@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ResponsiveChoroplethCanvas } from "@nivo/geo";
 import { Grid, Slider, Paper, Button, Typography } from "@mui/material";
+import * as d3 from "d3";
 
 function MapChart({ data, mapConfig }) {
   const defaultX = 0.5;
@@ -33,7 +34,7 @@ function MapChart({ data, mapConfig }) {
                 features={mapConfig.features}
                 margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                 colors={mapConfig.colors}
-                // domain={mapConfig.domain}
+                domain={mapConfig.domain}
                 unknownColor="#8c8c8c"
                 label={mapConfig.label}
                 valueFormat=".2s"
@@ -44,24 +45,24 @@ function MapChart({ data, mapConfig }) {
                 graticuleLineColor="rgba(0, 0, 0, .2)"
                 borderWidth={0.5}
                 borderColor="#000000"
-                // legends={[
-                //   {
-                //     anchor: "bottom-left",
-                //     direction: "column",
-                //     justify: true,
-                //     translateX: 20,
-                //     translateY: -60,
-                //     itemsSpacing: 0,
-                //     itemWidth: 92,
-                //     itemHeight: 18,
-                //     itemDirection: "left-to-right",
-                //     itemOpacity: 0.85,
-                //     symbolSize: 18,
-                //   },
-                // ]}
+                legends={[
+                  {
+                    anchor: "bottom-left",
+                    direction: "column",
+                    justify: true,
+                    translateX: 20,
+                    translateY: -60,
+                    itemsSpacing: 0,
+                    itemWidth: 92,
+                    itemHeight: 18,
+                    itemDirection: "left-to-right",
+                    itemOpacity: 0.85,
+                    symbolSize: 18,
+                  },
+                ]}
                 theme={{
                   background: "transparent",
-                  // textColor: "#ffffff",
+                  textColor: "white",
                 }}
               />
             </Grid>
